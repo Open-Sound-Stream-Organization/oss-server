@@ -3,6 +3,7 @@ from django.db.models import Model, CharField, TextField, ForeignKey, ManyToMany
 
 class Tag(Model):
     name = CharField(max_length=1024)
+    user = ForeignKey(User, on_delete=CASCADE)
 
 
 class Area(Model):
@@ -72,8 +73,9 @@ class Track(Model):
 
 
 class Playlist(Model):
-    tracks = ManyToManyField(Track)
+    tracks = ManyToManyField(Track, through='TrackInPlaylist')
     tags = ManyToManyField(Tag)
+    user = ForeignKey(User, on_delete=CASCADE)
 
 
 class TrackInPlaylist(Model):
