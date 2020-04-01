@@ -5,12 +5,17 @@ verify_ssl = true
 
 [dev-packages]
 model-bakery = "*"
+coverage = "*"
 
 [packages]
 django = "*"
 django-tastypie = "*"
 pydub = "*"
 pipfile = "*"
-
+pyacoustid = "*"
+psycopg2-binary = "*"
+django-audiofield = "*"
+musicbrainzngs = "*"
+Pillow = "*"
 [requires]
 python_version = "3.7"
