@@ -13,22 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.conf.urls import url, include
+from django.contrib import admin
 from django.urls import path
-from tastypie.api import Api
-from repertoire.api.resources import *
-
-v1_api = Api(api_name="v1")
-v1_api.register(TagResource())
-v1_api.register(ArtistResource())
-v1_api.register(AlbumResource())
-v1_api.register(TrackResource())
-v1_api.register(PlaylistResource())
-
-
+from repertoire.api.v1 import v1_api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/', include(v1_api.urls)),
+    url(r'api/doc/', include(('tastypie_swagger.urls', "tastypie_swagger"), namespace='tastypie_swagger')),
+
 ]
