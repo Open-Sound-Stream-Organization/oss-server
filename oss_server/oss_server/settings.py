@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'repertoire',
     'tastypie',
+    'tastypie_swagger',
 ]
 
 MIDDLEWARE = [
@@ -120,16 +121,35 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR + '/static/'
 
 MEDIA_ROOT = 'media/'
 MEDIA_URL = 'files/'
 
-#AUDIOFIELD CONF
-# Frontend widget values
-# 0-Keep original, 1-Mono, 2-Stereo
-CHANNEL_TYPE_VALUE = 0
-# 0-Keep original, 8000-8000Hz, 16000-16000Hz, 22050-22050Hz,
-# 44100-44100Hz, 48000-48000Hz, 96000-96000Hz
-FREQ_TYPE_VALUE = 0
-# 0-Keep original, 1-Convert to MP3, 2-Convert to WAV, 3-Convert to OGG
-CONVERT_TYPE_VALUE = 0
+
+TASTYPIE_SWAGGER_API_MODULE_LIST = (
+    {'path': 'repertoire.api.v1',
+     'obj': 'v1_api',
+     'func_name': ''},
+)
+
+TASTYPIE_SWAGGER_IGNORE_PATTERN_LIST = ['.DS_Store']
+TASTYPIE_SWAGGER_SERVER_URL = 'http://127.0.0.1:8000'
+TASTYPIE_SWAGGER_OPEN_API_INFO = {
+  "title": "Open Stream Server API",
+  "description": "This is a sample server for a pet store.",
+  "termsOfService": "http://example.com/terms/",
+  "contact": {
+    "name": "API Support",
+    "url": "http://www.example.com/support",
+    "email": "support@example.com"
+  },
+  "license": {
+    "name": "MIT License",
+    "url": "https://raw.githubusercontent.com/Open-Sound-Stream-Organization/oss-server/master/LICENSE"
+  },
+  "version": "1.0.1"
+}
+TASTYPIE_SWAGGER_INDEX_TITLE = ''
+TASTYPIE_SWAGGER_DOCS_DIR = 'api_doc'
+
