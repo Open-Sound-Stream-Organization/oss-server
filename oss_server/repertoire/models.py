@@ -19,7 +19,7 @@ class Area(Model):
         ("I", "Island"),
     ]
     type = CharField(max_length=2, choices=area_categories)
-    country_code = CharField(max_length=2, verbose_name='iso-3166-1-code', blank=True)
+    country_code = CharField(max_length=2, verbose_name='iso-3166-1-code', blank=True, null=True)
 
 
 class Artist(Model):
@@ -34,19 +34,20 @@ class Artist(Model):
         ("O", "Other"),
     ]
     type = CharField(max_length=1, choices=formation_types)
-    area = ForeignKey(Area, on_delete=PROTECT, blank=True)
-    begin = DateField("Date of persons birth/Date of group formation", blank=True)
-    end = DateField("Death of person/Group dissolved - blank if still together", blank=True)
+    area = ForeignKey(Area, on_delete=PROTECT, blank=True, null=True)
+    begin = DateField("Date of persons birth/Date of group formation", blank=True, null=True)
+    end = DateField("Death of person/Group dissolved - blank if still together", blank=True, null=True)
     user = ForeignKey(User, on_delete=CASCADE)
     tags = ManyToManyField(Tag)
 
 
 class Album(Model):
     name = TextField()
-    mbid = CharField(max_length=64, blank=True)
+    mbid = CharField(max_length=64, blank=True, null=True)
     release = DateField(blank=True)
-    cover_url = CharField(max_length=1024, blank=True)
-    cover_file = ImageField(blank=True)
+    artist = ManyToManyField(Artist)
+    cover_url = CharField(max_length=1024, blank=True, null=True)
+    cover_file = ImageField(blank=True, null=True)
     user = ForeignKey(User, on_delete=CASCADE)
     tags = ManyToManyField(Tag)
 
@@ -63,7 +64,7 @@ def audio_path(instance, filename):
 
 class Track(Model):
     title = CharField(max_length=512)
-    mbid = CharField(max_length=64, blank=True)
+    mbid = CharField(max_length=64, blank=True, null=True)
     album = ForeignKey(Album, on_delete=CASCADE)
     user = ForeignKey(User, on_delete=CASCADE)
     artist = ManyToManyField(Artist)
