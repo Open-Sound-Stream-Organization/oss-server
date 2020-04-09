@@ -35,4 +35,5 @@ class UserObjectsOnlyAuthorization(Authorization):
         return bundle.obj.user == bundle.request.user
 
     def delete_detail(self, object_list, bundle):
-        return bundle.obj.user == bundle.request.user)
+        return bundle.obj.user == bundle.request.user
+

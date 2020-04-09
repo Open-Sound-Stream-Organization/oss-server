@@ -1,6 +1,7 @@
 from tastypie.authentication import BasicAuthentication
 from tastypie.fields import ToOneField, ToManyField
 from tastypie.resources import ModelResource
+from repertoire.api.authorization import UserObjectsOnlyAuthorization
 from repertoire.models import Tag, Artist, Album, Playlist, Track
 
 
@@ -22,6 +23,7 @@ class TagResource(ModelResource):
         queryset = Tag.objects.all()
         allowed_methods = ['get', 'post', 'put', 'delete']
         authentication = BasicAuthentication(realm="Open Sound Stream: TagResource")
+        authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
         bundle.obj.user = bundle.request.user
@@ -38,6 +40,7 @@ class ArtistResource(ModelResource):
         queryset = Artist.objects.filter()
         allowed_methods = ['get', 'post', 'put', 'delete']
         authentication = BasicAuthentication(realm="Open Sound Stream: ArtistResource")
+        authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
         bundle.obj.user = bundle.request.user
@@ -55,6 +58,7 @@ class AlbumResource(ModelResource):
         queryset = Album.objects.all()
         allowed_methods = ['get', 'post', 'put', 'delete']
         authentication = BasicAuthentication(realm="Open Sound Stream: AlbumResource")
+        authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
         bundle.obj.user = bundle.request.user
@@ -72,9 +76,14 @@ class TrackResource(ModelResource):
         queryset = Track.objects.all()
         allowed_methods = ['get', 'post', 'put', 'delete']
         authentication = BasicAuthentication(realm="Open Sound Stream: TrackResource")
+        authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
         bundle.obj.user = bundle.request.user
+
+    def dehydrate(self, bundle):
+        bundle.data['audio'] = "file_track/{}/".format(bundle.data['id'])
+        return bundle
 
 
 class PlaylistResource(ModelResource):
@@ -85,6 +94,7 @@ class PlaylistResource(ModelResource):
         queryset = Playlist.objects.all()
         allowed_methods = ['get', 'post', 'put', 'delete']
         authentication = BasicAuthentication(realm="Open Sound Stream: PlaylistResource")
+        authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
         bundle.obj.user = bundle.request.user
