@@ -20,7 +20,7 @@ from repertoire.api.v1 import v1_api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('repertoire/', include('repertoire.urls', namespace='repertoire')),
     url(r'^api/', include(v1_api.urls)),
     url(r'api/doc/', include(('tastypie_swagger.urls', "tastypie_swagger"), namespace='tastypie_swagger')),
-
 ]
