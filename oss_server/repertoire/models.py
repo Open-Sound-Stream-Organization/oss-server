@@ -41,8 +41,8 @@ class Artist(Model):
     ]
     type = CharField(max_length=1, choices=formation_types, verbose_name='Type of Artist (Person/Group/etc.)')
     area = ForeignKey(Area, on_delete=PROTECT, blank=True, null=True, verbose_name='Area of Artist')
-    begin = DateField("Date of persons birth/Date of group formation", blank=True, null=True, verbose_name='Birth of Artist/Formation of Group')
-    end = DateField("Death of person/Group dissolved - blank if still together", blank=True, null=True, verbose_name='Death of Artist/Dissolvement of Group')
+    begin = DateField("Date of persons birth/Date of group formation", blank=True, null=True)
+    end = DateField("Death of person/Group dissolved - blank if still together", blank=True, null=True)
     user = ForeignKey(User, on_delete=CASCADE)
     tags = ManyToManyField(Tag, verbose_name='Tags')
     
