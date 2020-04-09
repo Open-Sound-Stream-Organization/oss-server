@@ -1,4 +1,4 @@
-from tastypie.models import ApiKey
+from repertoire.api.ApiKey import ApiKey
 from tastypie.http import HttpUnauthorized
 from tastypie.authentication import Authentication
 from django.core.exceptions import ObjectDoesNotExist

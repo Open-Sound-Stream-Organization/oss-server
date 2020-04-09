@@ -1,6 +1,7 @@
 from tastypie.authentication import BasicAuthentication, MultiAuthentication
 from tastypie.fields import ToOneField, ToManyField
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, Resource
+from repertoire.api.ApiKey import ApiKey
 from repertoire.api.authorization import UserObjectsOnlyAuthorization
 from repertoire.models import Tag, Artist, Album, Playlist, Track
 from repertoire.api.ApiKeyOnlyAuthentication import ApiKeyOnlyAuthentication
@@ -99,3 +100,4 @@ class PlaylistResource(ModelResource):
 
     def obj_create(self, bundle, **kwargs):
         bundle.obj.user = bundle.request.user
+
