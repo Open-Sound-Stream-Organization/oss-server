@@ -44,7 +44,7 @@ class Artist(Model):
     begin = DateField("Date of persons birth/Date of group formation", blank=True, null=True)
     end = DateField("Death of person/Group dissolved - blank if still together", blank=True, null=True)
     user = ForeignKey(User, on_delete=CASCADE)
-    tags = ManyToManyField(Tag, verbose_name='Tags')
+    tags = ManyToManyField(Tag, verbose_name='Tags', blank=True)
     
     def __str__(self):
         return "{}; '{}'".format(self.user.username, self.name)
@@ -59,7 +59,7 @@ class Album(Model):
     cover_url = CharField(max_length=1024, blank=True, null=True, verbose_name='Url of Cover-Image')
     cover_file = ImageField(blank=True, null=True, verbose_name='Custom Cover-Image')
     user = ForeignKey(User, on_delete=CASCADE)
-    tags = ManyToManyField(Tag)
+    tags = ManyToManyField(Tag, blank=True)
 
     def get_cover(self):
         if self.cover_file:
@@ -81,7 +81,7 @@ class Track(Model):
     album = ForeignKey(Album, on_delete=CASCADE, verbose_name='Track in Album')
     user = ForeignKey(User, on_delete=CASCADE)
     artist = ManyToManyField(Artist, verbose_name='From Artist')
-    tags = ManyToManyField(Tag)
+    tags = ManyToManyField(Tag, blank=True)
     audio = FileField(upload_to=audio_path, blank=True,
                        help_text=("Allowed type - .mp3, .wav, .ogg"), verbose_name='Audio File')
     def __str__(self):
@@ -91,7 +91,7 @@ class Track(Model):
 class Playlist(Model):
     name = CharField(max_length=512, verbose_name='Name of Playlist')
     tracks = ManyToManyField(Track, through='TrackInPlaylist', verbose_name='Tracks in Playlist')
-    tags = ManyToManyField(Tag)
+    tags = ManyToManyField(Tag, blank=True)
     user = ForeignKey(User, on_delete=CASCADE)
     
     def __str__(self):
