@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import secrets
+from pathlib import Path
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -19,13 +20,27 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ktb*e_!o2vy9f*11i9g++)#pv!y_ztq!dw^n6ennty3=la^a!j'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+if 'DJANGO_DEBUG' in os.environ:
+    DEBUG = True
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = "ToBeRead"
+if DEBUG:
+    SECRET_KEY = 'TotallyNotSecureKeyButItsJustForDebugging'
+else:
+    secret_key_path = Path('../secret_key.txt')
+    if not secret_key_path.is_file() or os.path.getsize(secret_key_path) < 32:
+        secret_key_file = secret_key_path.open('w')
+        secret_key_file.write(secrets.token_urlsafe(128))
+        secret_key_file.close()
+    with secret_key_path.open('r') as f:
+        SECRET_KEY = f.read().strip()
+
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -78,10 +93,20 @@ WSGI_APPLICATION = 'oss_server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'ossdb', # set in docker-compose.yml
+        'PORT': 5432 # default postgres port
     }
 }
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # Password validation

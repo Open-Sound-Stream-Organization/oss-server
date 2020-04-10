@@ -1,20 +1,18 @@
-version: '3.7'
+version: '3'
+
 services:
-  db:
-    image: "postgres:12"
+  ossdb:
+    image: postgres:alpine
     environment:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-  web:
+    restart: always
+  oss_server:
     build: .
-    command: python /oss_server/manage.py runserver 0.0.0.0:8000
+    command: ./start-server.sh
     volumes:
       - .:/oss_server
     ports:
-      - 8000:8000
+      - "8000:8000"
     depends_on:
-      - db
-
-volumes:
-  postgres_data:
+      - ossdb
+    restart: always
