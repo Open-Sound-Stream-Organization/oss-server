@@ -126,6 +126,7 @@ STATIC_ROOT = BASE_DIR + '/static/'
 MEDIA_ROOT = 'media/'
 MEDIA_URL = 'files/'
 
+TASTYPIE_ABSTRACT_APIKEY = True
 
 TASTYPIE_SWAGGER_API_MODULE_LIST = (
     {'path': 'repertoire.api.v1',

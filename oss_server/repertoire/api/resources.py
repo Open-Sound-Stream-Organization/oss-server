@@ -1,9 +1,10 @@
-from tastypie.authentication import BasicAuthentication
+from tastypie.authentication import BasicAuthentication, MultiAuthentication
 from tastypie.fields import ToOneField, ToManyField
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, Resource
+from repertoire.api.ApiKey import ApiKey
 from repertoire.api.authorization import UserObjectsOnlyAuthorization
 from repertoire.models import Tag, Artist, Album, Playlist, Track
-
+from repertoire.api.ApiKeyOnlyAuthentication import ApiKeyOnlyAuthentication
 
 class TagResource(ModelResource):
     artists = ToManyField('repertoire.api.resources.ArtistResource',
@@ -22,11 +23,11 @@ class TagResource(ModelResource):
     class Meta:
         queryset = Tag.objects.all()
         allowed_methods = ['get', 'post', 'put', 'delete']
-        authentication = BasicAuthentication(realm="Open Sound Stream: TagResource")
+        authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: TagResource"), ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(TagResource, self).obj_create(bundle, user=bundle.request.user)
 
 
 class ArtistResource(ModelResource):
@@ -39,11 +40,11 @@ class ArtistResource(ModelResource):
     class Meta:
         queryset = Artist.objects.filter()
         allowed_methods = ['get', 'post', 'put', 'delete']
-        authentication = BasicAuthentication(realm="Open Sound Stream: ArtistResource")
+        authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: ArtistResource"), ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(ArtistResource, self).obj_create(bundle, user=bundle.request.user)
 
 
 class AlbumResource(ModelResource):
@@ -57,11 +58,11 @@ class AlbumResource(ModelResource):
     class Meta:
         queryset = Album.objects.all()
         allowed_methods = ['get', 'post', 'put', 'delete']
-        authentication = BasicAuthentication(realm="Open Sound Stream: AlbumResource")
+        authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: AlbumResource"), ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(AlbumResource, self).obj_create(bundle, user=bundle.request.user)
 
 
 class TrackResource(ModelResource):
@@ -75,14 +76,14 @@ class TrackResource(ModelResource):
     class Meta:
         queryset = Track.objects.all()
         allowed_methods = ['get', 'post', 'put', 'delete']
-        authentication = BasicAuthentication(realm="Open Sound Stream: TrackResource")
+        authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: TrackResource"), ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(TrackResource, self).obj_create(bundle, user=bundle.request.user)
 
     def dehydrate(self, bundle):
-        bundle.data['audio'] = "file_track/{}/".format(bundle.data['id'])
+        bundle.data['audio'] = "repertoire/track_file/{}/".format(bundle.data['id'])
         return bundle
 
 
@@ -93,8 +94,27 @@ class PlaylistResource(ModelResource):
     class Meta:
         queryset = Playlist.objects.all()
         allowed_methods = ['get', 'post', 'put', 'delete']
-        authentication = BasicAuthentication(realm="Open Sound Stream: PlaylistResource")
+        authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: PlaylistResource"), ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(PlaylistResource, self).obj_create(bundle, user=bundle.request.user)
+
+class ApiKeyResource(ModelResource):
+    class Meta:
+        queryset = ApiKey.objects.all()
+        allowed_methods = ['get','post', 'delete']
+        always_return_data = True
+        authentication = BasicAuthentication(realm="Open Sound Stream: ApiKeyResource")
+        authorization = UserObjectsOnlyAuthorization()
+        excludes = ['key', 'shown']
+
+    def dehydrate(self, bundle):
+        if bundle.request.method == 'POST' and not bundle.obj.shown:
+            bundle.data['key'] = bundle.obj.key
+            bundle.obj.shown = True
+            bundle.obj.save()
+        return bundle
+
+    def obj_create(self, bundle, **kwargs):
+        return super(ApiKeyResource, self).obj_create(bundle, user=bundle.request.user)
