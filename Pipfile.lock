@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ca68991e2aa6e21dd8376b78b9d2dc6b2c71a89239e79cdcf30c9bcd2f8a83f5"
+            "sha256": "9a3bf4eba5d22bf19dfd8a750882ac6764634dbf1fe9fd553cf353feae01a5de"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -57,6 +57,14 @@
             ],
             "index": "pypi",
             "version": "==0.14.3"
+        },
+        "gunicorn": {
+            "hashes": [
+                "sha256:1904bb2b8a43658807108d59c3f3d56c2b6121a701161de0ddf9ad140073c626",
+                "sha256:cd4a810dd51bf497552cf3f863b575dabd73d6ad6a91075b65936b151cbf4f9c"
+            ],
+            "index": "pypi",
+            "version": "==20.0.4"
         },
         "idna": {
             "hashes": [
@@ -203,7 +211,7 @@
         },
         "tastypie-swagger": {
             "git": "https://github.com/anjomro/django-tastypie-swagger.git",
-            "ref": "76b0946cdd9d985c7d6bcb28aaf158b09dd4a2c3"
+            "ref": "89adb10e931e612eb85d027f39018c16fd4f885c"
         },
         "toml": {
             "hashes": [

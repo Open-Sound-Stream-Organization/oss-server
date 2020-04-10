@@ -18,7 +18,6 @@ musicbrainzngs = "*"
 Pillow = "*"
 tastypie-swagger = {git = "https://github.com/anjomro/django-tastypie-swagger.git",ref = "master"}
 gunicorn = "*"
-psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
