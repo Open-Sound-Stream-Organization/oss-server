@@ -105,3 +105,12 @@ class TrackInPlaylist(Model):
     
     def __str__(self):
         return "{}; Track '{}' in Playlist '{}'".format(self.playlist.user.username, self.track.title, self.playlist.name)
+
+class Settings(Model):
+    '''Holds settings for syncing across devices'''
+    identifier = CharField(max_length=128, verbose_name='Setting Identifier')
+    data = TextField(verbose_name='Data holding identifier')
+    user = ForeignKey(User, on_delete=CASCADE)
+
+    def __str__(self):
+        return "{}: Setting: {}".format(self.user, self.identifier)
