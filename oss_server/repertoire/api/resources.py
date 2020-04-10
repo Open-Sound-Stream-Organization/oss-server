@@ -6,7 +6,6 @@ from repertoire.api.authorization import UserObjectsOnlyAuthorization
 from repertoire.models import Tag, Artist, Album, Playlist, Track
 from repertoire.api.ApiKeyOnlyAuthentication import ApiKeyOnlyAuthentication
 
-
 class TagResource(ModelResource):
     artists = ToManyField('repertoire.api.resources.ArtistResource',
                           attribute=lambda bundle: Artist.objects.filter(tags=bundle.obj, user=bundle.obj.user),
@@ -105,9 +104,17 @@ class ApiKeyResource(ModelResource):
     class Meta:
         queryset = ApiKey.objects.all()
         allowed_methods = ['get','post', 'delete']
+        always_return_data = True
         authentication = BasicAuthentication(realm="Open Sound Stream: ApiKeyResource")
         authorization = UserObjectsOnlyAuthorization()
-        excludes = ['key']
+        excludes = ['key', 'shown']
+
+    def dehydrate(self, bundle):
+        if bundle.request.method == 'POST' and not bundle.obj.shown:
+            bundle.data['key'] = bundle.obj.key
+            bundle.obj.shown = True
+            bundle.obj.save()
+        return bundle
 
     def obj_create(self, bundle, **kwargs):
         return super(ApiKeyResource, self).obj_create(bundle, user=bundle.request.user)
