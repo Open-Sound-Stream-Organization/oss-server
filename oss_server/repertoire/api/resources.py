@@ -28,7 +28,7 @@ class TagResource(ModelResource):
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(TagResource, self).obj_create(bundle, user=bundle.request.user)
 
 
 class ArtistResource(ModelResource):
@@ -45,7 +45,7 @@ class ArtistResource(ModelResource):
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(ArtistResource, self).obj_create(bundle, user=bundle.request.user)
 
 
 class AlbumResource(ModelResource):
@@ -63,7 +63,7 @@ class AlbumResource(ModelResource):
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(AlbumResource, self).obj_create(bundle, user=bundle.request.user)
 
 
 class TrackResource(ModelResource):
@@ -81,7 +81,7 @@ class TrackResource(ModelResource):
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(TrackResource, self).obj_create(bundle, user=bundle.request.user)
 
     def dehydrate(self, bundle):
         bundle.data['audio'] = "repertoire/track_file/{}/".format(bundle.data['id'])
@@ -99,5 +99,15 @@ class PlaylistResource(ModelResource):
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        bundle.obj.user = bundle.request.user
+        return super(PlaylistResource, self).obj_create(bundle, user=bundle.request.user)
 
+class ApiKeyResource(ModelResource):
+    class Meta:
+        queryset = ApiKey.objects.all()
+        allowed_methods = ['get','post', 'delete']
+        authentication = BasicAuthentication(realm="Open Sound Stream: ApiKeyResource")
+        authorization = UserObjectsOnlyAuthorization()
+        excludes = ['key']
+
+    def obj_create(self, bundle, **kwargs):
+        return super(ApiKeyResource, self).obj_create(bundle, user=bundle.request.user)
