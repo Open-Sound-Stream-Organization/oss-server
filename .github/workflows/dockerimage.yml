@@ -1,56 +1,26 @@
 name: Docker Image CI
 
 on:
-  pull_request:
-    branches: [ master ]
   push:
+    branches: [ master ]
+  pull_request:
     branches: [ master ]
 
 jobs:
 
-  build-push-docker:
+  build:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: Push alpine image to Docker Hub
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: opensoundstream/oss-server
-        tag_with_sha: true
-        add_git_labels: true
-        tags: alpine
-    - name: Push slim image to Docker Hub
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: opensoundstream/oss-server
-        dockerfile: Dockerfile.slim
-        tag_with_sha: true
-        add_git_labels: true
-        tags: slim
-    - name: Push alpine image to Github Packages
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
-        repository: opensoundstream/oss-server/alpine
-        tag_with_sha: true
-        add_git_labels: true
-        tags: alpine
-    - name: Push slim image to Github Packages
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
-        repository: opensoundstream/oss-server
-        dockerfile: Dockerfile.slim
-        tag_with_sha: true
-        add_git_labels: true
-        tags: slim
+    - name: Build the Docker slim image
+      run: docker build . --file Dockerfile.slim --tag opensoundstream/oss-server:slim
+    - name: Build the Docker alpine image
+      run: docker build . --file Dockerfile --tag opensoundstream/oss-server:alpine
+    - name: Login into dockerhub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Push the Docker slim image to Dockerhub
+      run: docker push opensoundstream/oss-server:slim
+    - name: Push the Docker alpine image to Dockerhub
+      run: docker push opensoundstream/oss-server:alpine
