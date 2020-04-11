@@ -24,7 +24,6 @@ COPY Pipfile Pipfile.lock README.md LICENSE start-server.sh oss_server /oss_serv
 COPY --from=builder /install /usr/local
 
 RUN apk add libjpeg zlib \
-    && pip list \
     && pip install six \
     && python manage.py makemigrations --noinput \
     && python manage.py collectstatic --noinput
