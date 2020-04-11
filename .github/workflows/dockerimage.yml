@@ -21,7 +21,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: opensoundstream/oss-server
         tag_with_sha: true
-        add_git_labels: org.opencontainers.image.created
+        add_git_labels: true
         tags: alpine
     - name: Push slim image to Docker Hub
       uses: docker/build-push-action@v1
@@ -31,7 +31,7 @@ jobs:
         repository: opensoundstream/oss-server
         dockerfile: Dockerfile.slim
         tag_with_sha: true
-        add_git_labels: org.opencontainers.image.created
+        add_git_labels: true
         tags: slim
     - name: Push alpine image to Github Packages
       uses: docker/build-push-action@v1
@@ -41,7 +41,7 @@ jobs:
         registry: docker.pkg.github.com
         repository: opensoundstream/oss-server/alpine
         tag_with_sha: true
-        add_git_labels: org.opencontainers.image.created
+        add_git_labels: true
         tags: alpine
     - name: Push slim image to Github Packages
       uses: docker/build-push-action@v1
@@ -52,5 +52,5 @@ jobs:
         repository: opensoundstream/oss-server
         dockerfile: Dockerfile.slim
         tag_with_sha: true
-        add_git_labels: org.opencontainers.image.created
+        add_git_labels: true
         tags: slim
