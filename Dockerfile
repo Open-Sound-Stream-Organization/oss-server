@@ -1,27 +1,33 @@
-FROM python:slim
+FROM python:alpine as base
+
+# Set work directory
+WORKDIR /oss_server
+FROM base as builder
+# Copy Pipfile
+COPY Pipfile /oss_server/
+#Install dependencies
+RUN apk update \
+    && apk upgrade \
+    && apk add postgresql-dev gcc python3-dev musl-dev jpeg-dev zlib-dev git \
+    && pip install pipenv \
+    && pipenv lock -r > requirements.txt \
+    && pip install --prefix=/install -r ./requirements.txt
+FROM base
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV PYTHONUNBUFFERED 1
-
-# Set work directory
-WORKDIR /oss_server
 
 EXPOSE 8000
-
 # Copy project
-COPY oss_server /oss_server/
-#Install Pillow dependencie
-RUN apt update
-RUN apt install python-pillow -y
-#Install Git
-RUN apt install git -y
-# Install dependencies
-RUN pip install pipenv
-COPY Pipfile Pipfile.lock README.md LICENSE start-server.sh /oss_server/
-RUN pipenv install --system
-RUN cd /oss_server/oss_server
-RUN python manage.py makemigrations --noinput
-RUN python manage.py collectstatic --noinput
-CMD sh -c "python manage.py makemigrations && gunicorn --bind :8000 --workers 3 oss_server.wsgi"
+COPY Pipfile Pipfile.lock README.md LICENSE start-server.sh oss_server /oss_server/
+COPY --from=builder /install /usr/local
+
+RUN apk add libjpeg zlib \
+    && pip list \
+    && pip install six \
+    && python manage.py makemigrations --noinput \
+    && python manage.py collectstatic --noinput
+
+CMD python manage.py migrate --noinput \
+    && gunicorn --bind :8000 --workers 3 oss_server.wsgi

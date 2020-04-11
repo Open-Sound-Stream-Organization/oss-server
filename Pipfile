@@ -19,5 +19,3 @@ Pillow = "*"
 tastypie-swagger = {git = "https://github.com/anjomro/django-tastypie-swagger.git",ref = "master"}
 gunicorn = "*"
 
-[requires]
-python_version = "3.7"
