@@ -13,6 +13,8 @@ services:
       - .:/oss_server
     ports:
       - "8000:8000"
+    environment:
+      - USE_POSTGRESQL=1
     depends_on:
       - ossdb
     restart: always
