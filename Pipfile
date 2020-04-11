@@ -18,4 +18,4 @@ musicbrainzngs = "*"
 Pillow = "*"
 tastypie-swagger = {git = "https://github.com/anjomro/django-tastypie-swagger.git",ref = "master"}
 gunicorn = "*"
-
+whitenoise = "*"
