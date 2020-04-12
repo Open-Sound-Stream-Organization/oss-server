@@ -42,7 +42,7 @@ else:
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 if 'DJANGO_HOST' in os.environ:
-    ALLOWED_HOSTS += os.environ['DJANGO_HOST']
+    ALLOWED_HOSTS += [ os.environ['DJANGO_HOST'] ]
 
 # Application definition
 
