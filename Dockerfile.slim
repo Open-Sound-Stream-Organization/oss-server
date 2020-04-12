@@ -12,6 +12,9 @@ EXPOSE 8000
 
 # Copy project
 COPY Pipfile Pipfile.lock README.md LICENSE start-server.sh oss_server /oss_server/
+
+VOLUME /oss_server/db
+
 #Install Pillow dependencies
 RUN apt update \
     && apt install python-pillow -y \

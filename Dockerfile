@@ -23,6 +23,8 @@ EXPOSE 8000
 COPY Pipfile Pipfile.lock README.md LICENSE start-server.sh oss_server /oss_server/
 COPY --from=builder /install /usr/local
 
+VOLUME /oss_server/db
+
 RUN apk add libjpeg zlib \
     && pip install six \
     && python manage.py makemigrations --noinput \
