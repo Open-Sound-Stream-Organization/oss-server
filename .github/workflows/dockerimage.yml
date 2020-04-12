@@ -11,6 +11,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        - submodules: 'recursive'
     - name: Build the Docker slim image
       run: docker build . --file Dockerfile.slim --tag opensoundstream/oss-server:slim
     - name: Build the Docker alpine image
