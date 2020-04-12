@@ -23,4 +23,5 @@ urlpatterns = [
     path('repertoire/', include('repertoire.urls', namespace='repertoire')),
     url(r'^api/', include(v1_api.urls)),
     url(r'api/doc/', include(('tastypie_swagger.urls', "tastypie_swagger"), namespace='tastypie_swagger')),
+    path('', include('web_interface.urls', namespace='web_interface'))
 ]
