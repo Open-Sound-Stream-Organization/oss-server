@@ -18,7 +18,7 @@ jobs:
     - name: Add name and email for git changes
       run: git config --global user.email "github@anjomro.de" && git config --global user.name "anjomro"
     - name: Update submodules
-      run: git submodule update --remote --merge --allow-unrelated-histories
+      run: git submodule update --remote --merge
     - name: Add changes of submodules
       run: git add oss_server/web_interface/oss-web/
     - name: Commit and Push changes in oss-web submodule
