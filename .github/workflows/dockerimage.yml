@@ -16,7 +16,7 @@ jobs:
       with:
         submodules: 'recursive'
     - name: Update oss-web submodule
-      run: git submodule update --remote --merge
+      run: git submodule foreach git pull origin master
     - name: Commit and Push changes in oss-web submodule
       uses: stefanzweifel/git-auto-commit-action@v4.1.2
       with:
