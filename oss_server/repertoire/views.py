@@ -25,4 +25,11 @@ def track_file(request, pk:int):
         else:
             return HttpResponseNotFound("<b>Not found:</b> For the requested track no audio file was saved on the server")
     else:
+        if request.user.is_authenticated:
+            track = get_object_or_404(Track, id=pk, user=request.user)
+            if track.audio is not None:
+                return FileResponse(track.audio.open("rb"))
+            else:
+                return HttpResponseNotFound(
+                    "<b>Not found:</b> For the requested track no audio file was saved on the server")
         return HttpResponseForbidden("<b>Forbidden:</b> Authorized access with an API-Key only!")
