@@ -54,7 +54,7 @@ class Artist(Model):
 class Album(Model):
     name = TextField(verbose_name='Album Name')
     mbid = CharField(max_length=64, blank=True, null=True, verbose_name='Musicbrainz ID')
-    release = DateField(blank=True, verbose_name='First release of Album')
+    release = DateField(blank=True, null=True, verbose_name='First release of Album')
     artist = ManyToManyField(Artist, verbose_name='Album Artist(s)')
     cover_url = CharField(max_length=1024, blank=True, null=True, verbose_name='Url of Cover-Image')
     cover_file = ImageField(blank=True, null=True, verbose_name='Custom Cover-Image')
