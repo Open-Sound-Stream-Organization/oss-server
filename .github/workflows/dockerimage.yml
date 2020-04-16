@@ -15,8 +15,12 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
-    - name: Update oss-web submodule
-      run: git submodule foreach git pull origin master
+    - name: Add name and email for git changes
+      run: git config --global user.email "github@anjomro.de" && git config --global user.name "anjomro"
+    - name: Update submodules
+      run: git submodule update --remote --merge
+    - name: Add changes of submodules
+      run: git add oss_server/web_interface/oss-web/
     - name: Commit and Push changes in oss-web submodule
       uses: stefanzweifel/git-auto-commit-action@v4.1.2
       with:
