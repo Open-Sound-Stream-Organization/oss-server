@@ -15,3 +15,19 @@ The recommended and easiest way of deploying the OpenSoundStream Server is to us
 - `--mount source=oss-server-db,target=/oss_server/db` A docker volume is used to persist the sqlite-database: If the container is deleted and instanciated again the Volume and therefore teh Database is used again.
 - `--name oss-server` Name the container 'oss-server' for future reference
 - `opensoundstream/oss-server:alpine` Specifies to use the alpine image of the oss-server and pulls it from dockerhub if not available locally
+
+#### Additional Parameters (that might be useful)
+- `-e DJANGO_HOST=my-domain.tld` Add example.com to the allowed host if exposing the Port directly (not recommend!).  The recommended way is to use a reverse proxy The allowed ports include `localhost` and `127.0.0.1` by default.
+
+#### Reverse Proxy Config for Apache
+
+    <VirtualHost *:443> #Using TLS-Encryption is strongly recommended 
+	    ServerName my-domain.tld  
+	    ProxyPass / http://localhost:8099/  
+	    ProxyPassReverse / http://localhost:8099/
+	    
+	    #For Let's Encrypt confifguration
+	    Include /etc/letsencrypt/options-ssl-apache.conf SSLCertificateFile
+	    /etc/letsencrypt/live/my-domain.tld-0001/fullchain.pem SSLCertificateKeyFile
+	    /etc/letsencrypt/live/my-domain.tld-0001/privkey.pem
+	</VirtualHost>
