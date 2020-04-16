@@ -1,8 +1,13 @@
 # OpenSoundStream Server
+
+OpenSoundStream is a system for managing and listening to songs from your private music collection. Beside it's website there are (native) client applications for Android and Windows available. It is meant to be used as a self-hosted application. It has a multi user system built in, so you can use your server together with friends.
 ## Deployment
 The recommended and easiest way of deploying the OpenSoundStream Server is to use the available docker container.
 
-`docker run -d -p 8099:8000 --mount source=oss-server-db,target=/oss_server/db --name oss-server opensoundstream/oss-server:alpine`
+    docker run -d -p 8099:8000 \
+        --mount source=oss-server-db,target=/oss_server/db \
+         --name oss-server \
+         opensoundstream/oss-server:alpine
 
 ##### Parameter Explanation:
 - `-d` Run the server in detached mode (-> in Background)
