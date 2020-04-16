@@ -1,3 +1,4 @@
 [submodule "oss_server/web_interface/oss-web"]
 	path = oss_server/web_interface/oss-web
 	url = https://github.com/Open-Sound-Stream-Organization/oss-web
+	branch = master
