@@ -15,6 +15,17 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
+    - name: Update oss-web submodule
+      run: git submodule update --remote --merge
+    - name: Commit and Push changes in oss-web submodule
+      uses: stefanzweifel/git-auto-commit-action@v4.1.2
+      with:
+        commit_message: Updated oss-web submodule
+        branch: master
+        repository: .
+        commit_user_name: anjomro
+        commit_user_email: github@anjomro.de
+        commit_author: anjomro <github@anjomro.de>
     - name: Build the Docker slim image
       run: docker build . --file Dockerfile.slim --tag opensoundstream/oss-server:slim
     - name: Build the Docker alpine image
