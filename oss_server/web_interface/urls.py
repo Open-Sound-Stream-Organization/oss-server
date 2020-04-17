@@ -7,7 +7,7 @@ from web_interface.views import get_file_serve_view
 
 app_name = 'web_interface'
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='index.html'), name='react_index'),
+    url(r'^.*$', TemplateView.as_view(template_name='index.html'), name='react_index'),
 ]
 serve_web_files = ['robots.txt', 'service-worker.js', 'manifest.json', 'asset-manifest.json']
 
