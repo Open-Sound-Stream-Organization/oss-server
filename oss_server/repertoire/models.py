@@ -24,7 +24,8 @@ class Area(Model):
     ]
     type = CharField(max_length=2, choices=area_categories, verbose_name='Area Type')
     country_code = CharField(max_length=2, verbose_name='iso-3166-1-code', blank=True, null=True)
-    
+    user = ForeignKey(User, on_delete=CASCADE)
+
     def __str__(self):
         return self.name
 
