@@ -5,8 +5,22 @@ from tastypie.resources import ModelResource
 from repertoire.api.ApiKey import ApiKey
 from repertoire.api.ApiKeyOnlyAuthentication import ApiKeyOnlyAuthentication
 from repertoire.api.authorization import UserObjectsOnlyAuthorization
-from repertoire.models import Tag, Artist, Album, Playlist, Track, Settings
+from repertoire.models import Tag, Artist, Album, Playlist, Track, Settings, Area
 
+
+class AreaResource(ModelResource):
+    artists = ToManyField('repertoire.api.resources.ArtistResource',
+                          attribute=lambda bundle: Artist.objects.filter(tags=bundle.obj, user=bundle.obj.user),
+                          related_name='artist', blank=True, null=True)
+    class Meta:
+        queryset = Area.objects.all()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: TagResource"),
+                                             ApiKeyOnlyAuthentication())
+        authorization = UserObjectsOnlyAuthorization()
+
+    def obj_create(self, bundle, **kwargs):
+        return super(AreaResource, self).obj_create(bundle, user=bundle.request.user)
 
 class TagResource(ModelResource):
     artists = ToManyField('repertoire.api.resources.ArtistResource',
@@ -72,7 +86,7 @@ class AlbumResource(ModelResource):
 
 class TrackResource(ModelResource):
     tags = ToManyField(TagResource, attribute=lambda bundle: Tag.objects.filter(track=bundle.obj), blank=True,
-                       null=True, )
+                       null=True)
     album = ToOneField("repertoire.api.resources.AlbumResource",
                        attribute=lambda bundle: Album.objects.filter(track=bundle.obj).first(), blank=True, null=True)
     artists = ToManyField("repertoire.api.resources.ArtistResource",
@@ -85,13 +99,21 @@ class TrackResource(ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
 
-    def obj_create(self, bundle, **kwargs):
-        return super(TrackResource, self).obj_create(bundle, user=bundle.request.user)
+    #def obj_create(self, bundle, **kwargs):
+    #    return super(TrackResource, self).obj_create(bundle, user=bundle.request.user)
 
     def dehydrate(self, bundle):
-        bundle.data['audio'] = "repertoire/track_file/{}/".format(bundle.data['id'])
+        bundle.data['audio'] = "repertoire/song_file/{}/".format(bundle.data['id'])
         return bundle
 
+class SongResource(TrackResource):
+    class Meta:
+        resource_name = 'song'
+        queryset = Track.objects.all()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: SongResource"),
+                                             ApiKeyOnlyAuthentication())
+        authorization = UserObjectsOnlyAuthorization()
 
 class PlaylistResource(ModelResource):
     tags = ToManyField(TagResource, attribute=lambda bundle: Tag.objects.filter(playlist=bundle.obj), blank=True,
@@ -137,4 +159,4 @@ class SettingsResource(ModelResource):
         authorization = UserObjectsOnlyAuthorization()
 
     def obj_create(self, bundle, **kwargs):
-        return super(ApiKeyResource, self).obj_create(bundle, user=bundle.request.user)
+        return super(SettingsResource, self).obj_create(bundle, user=bundle.request.user)

@@ -4,5 +4,5 @@ from repertoire.views import track_file
 
 app_name = 'repertoire'
 urlpatterns = [
-    path('track_file/<int:pk>/', track_file, name='track_file')
+    path('song_file/<int:pk>/', track_file, name='track_file')
 ]
