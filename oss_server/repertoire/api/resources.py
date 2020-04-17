@@ -18,6 +18,7 @@ class AreaResource(ModelResource):
         authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: TagResource"),
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
+        always_return_data = True
 
     def obj_create(self, bundle, **kwargs):
         return super(AreaResource, self).obj_create(bundle, user=bundle.request.user)
@@ -42,6 +43,7 @@ class TagResource(ModelResource):
         authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: TagResource"),
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
+        always_return_data = True
 
     def obj_create(self, bundle, **kwargs):
         return super(TagResource, self).obj_create(bundle, user=bundle.request.user)
@@ -60,6 +62,7 @@ class ArtistResource(ModelResource):
         authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: ArtistResource"),
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
+        always_return_data = True
 
     def obj_create(self, bundle, **kwargs):
         return super(ArtistResource, self).obj_create(bundle, user=bundle.request.user)
@@ -79,6 +82,7 @@ class AlbumResource(ModelResource):
         authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: AlbumResource"),
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
+        always_return_data = True
 
     def obj_create(self, bundle, **kwargs):
         return super(AlbumResource, self).obj_create(bundle, user=bundle.request.user)
@@ -98,9 +102,10 @@ class TrackResource(ModelResource):
         authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: TrackResource"),
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
+        always_return_data = True
 
-    #def obj_create(self, bundle, **kwargs):
-    #    return super(TrackResource, self).obj_create(bundle, user=bundle.request.user)
+    def obj_create(self, bundle, **kwargs):
+        return super(TrackResource, self).obj_create(bundle, user=bundle.request.user)
 
     def dehydrate(self, bundle):
         bundle.data['audio'] = "repertoire/song_file/{}/".format(bundle.data['id'])
@@ -114,6 +119,8 @@ class SongResource(TrackResource):
         authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: SongResource"),
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
+        always_return_data = True
+
 
 class PlaylistResource(ModelResource):
     tags = ToManyField(TagResource, attribute=lambda bundle: Tag.objects.filter(playlist=bundle.obj), blank=True,
@@ -125,6 +132,7 @@ class PlaylistResource(ModelResource):
         authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: PlaylistResource"),
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
+        always_return_data = True
 
     def obj_create(self, bundle, **kwargs):
         return super(PlaylistResource, self).obj_create(bundle, user=bundle.request.user)
@@ -157,6 +165,7 @@ class SettingsResource(ModelResource):
         authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: PlaylistResource"),
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
+        always_return_data = True
 
     def obj_create(self, bundle, **kwargs):
         return super(SettingsResource, self).obj_create(bundle, user=bundle.request.user)
