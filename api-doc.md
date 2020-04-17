@@ -9,16 +9,17 @@
  with all required parameters.
  
  --------------------------------------------------------------------------
+ **Make sure to install the docker <br> (https://github.com/Open-Sound-Stream-Organization/oss-server/blob/master/README.md) to run the commands** <br> <br>
  Explanation of parameters:
  
- - H 'Content-Type: application/json' 
+ **-H 'Content-Type: application/json'** <br>
  is the format of the output; could also be 
  -H 'Content-Type: application/xml'
  
- - H 'Authorization: testapikey' 
+ **-H 'Authorization: testapikey'** <br>
  testapikey must be the respective API-Key
   
-  - X HTTP-METHOD "URL" -v 
+ **-X HTTP-METHOD "URL" -v** <br>
   HTTP-METHOD can be 'POST', 'GET', 'DELETE' and 'PUT'.
   URL depends on the the wanted functionality to implement 
  
