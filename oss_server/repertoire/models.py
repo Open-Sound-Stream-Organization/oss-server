@@ -83,7 +83,7 @@ class Track(Model):
     user = ForeignKey(User, on_delete=CASCADE)
     artist = ManyToManyField(Artist, verbose_name='From Artist')
     tags = ManyToManyField(Tag, blank=True)
-    audio = FileField(upload_to=audio_path, blank=True,
+    audio = FileField(upload_to=audio_path, blank=True, null=True,
                        help_text=("Allowed type - .mp3, .wav, .ogg"), verbose_name='Audio File')
     def __str__(self):
         return "{}; '{}'".format(self.user.username, self.title)
