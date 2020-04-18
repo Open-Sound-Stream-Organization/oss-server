@@ -101,3 +101,32 @@ DELETE-Request:
 | resource_uri |                                       |                                     |
 
 </details>
+
+
+## Request Album objects 
+
+Request URL:
+https://oss.anjomro.de/api/v1/album/
+
+ 
+<details>
+	<summary>Curl-Request-Examples</summary>
+GET-Request:
+	
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/album/" -v
+
+POST-Request:
+
+ Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"covertest","cover_url":"
+https://de.wikipedia.org/wiki/Bild_am_Sonntag#/media/Datei:Logo_Bild_am_Sonntag_(Bams).svg", "artists":[ "/api/v1/artis
+t/2/"]}' "https://oss.anjomro.de/api/v1/album/" -v -H "accept: /"
+
+PUT-Request:
+
+		TODO: curl-example-put-request
+
+DELETE-Request:
+
+		TODO: curl-example-delete-request
+</details>
+
