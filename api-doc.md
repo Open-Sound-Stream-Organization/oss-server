@@ -46,7 +46,8 @@ GET-Request:
 
 POST-Request:
 
-		TODO: curl-example-post-request
+ Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"title":"test5","album":"/api/v1
+/album/1/", "artists":[ "/api/v1/artist/2/"]}' "https://oss.anjomro.de/api/v1/track/" -v -H "accept: /"
 
 PUT-Request:
 
