@@ -212,13 +212,54 @@ GET-Request: Get artist 1
 
 POST-Request: Post new artist
 
- Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"DieExmatrikulatoren","formation_types":"Group"}' "https://oss.anjomro.de/api/v1/artist/" -v -H "accept: /"
+ 	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"DieExmatrikulatoren","formation_types":"Group"}' "https://oss.anjomro.de/api/v1/artist/" -v -H "accept: /"
 
 PUT-Request: Put name of of artist 3
 
-Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"DieExmatrikulatoren2"}'  https://oss.anjomro.de/api/v1/artist/3/ -v -H "accept: /"
+	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"DieExmatrikulatoren2"}'  https://oss.anjomro.de/api/v1/artist/3/ -v -H "accept: /"
 
 DELETE-Request: Delete artist 2
 
-Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/artist/2/ -v -H "accept: /"
+	Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/artist/2/ -v -H "accept: /"
+</details>
+
+<details>
+	<summary>Sample GET-Response:</summary>
+
+	{
+		"meta": {
+				"limit": 200,
+				"next": null,
+				"offset": 0,
+				"previous": null,
+				"total_count": 1
+		},
+		"objects": [
+				{
+					"albums": [], 
+					"area": "/api/v1/area/1", 
+					"begin": null, 
+					"end": null, 
+					"formation_types": "Group", 
+					"id": 506, "mbid": "", 
+					"name": "DieBiebos", 
+					"resource_uri": "/api/v1/artist/506", 
+					"songs": [	  "/api/v1/track/1",
+							  "/api/v1/track/2",
+							  "/api/v1/track/3",
+							  "/api/v1/track/8", 
+						 	  "/api/v1/track/9", 
+						 	  "/api/v1/track/14", 
+						 	  "/api/v1/track/15", 
+						 	  "/api/v1/track/23"],
+						"tags": [
+							"/api/v1/tag/1/"
+						], 
+					"type": ""
+				
+				}
+				
+				
+		]
+	}
 </details>
