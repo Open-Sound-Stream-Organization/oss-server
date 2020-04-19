@@ -59,16 +59,16 @@ GET-Request: Get song 1
 
 POST-Request: Post new song
 
- Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"title":"test5","album":"/api/v1
-/album/1/", "artists":[ "/api/v1/artist/2/"]}' "https://oss.anjomro.de/api/v1/song/" -v -H "accept: /"
+ 	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"title":"test5","album":"/api/v1
+	/album/1/", "artists":[ "/api/v1/artist/2/"]}' "https://oss.anjomro.de/api/v1/song/" -v -H "accept: /"
 
 PUT-Request: Put title of song 1
 
-Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"title":"new title"}'  https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
+	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"title":"new title"}' 		 	https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
 
 DELETE-Request: Delete song 1
 
-Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
+	Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
 </details>
 <details>
 	<summary>Sample GET-Response:</summary>
@@ -130,9 +130,9 @@ GET-Request: Get album 5
 
 POST-Request: Post new album
 
- Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"covertest","cover_url":"
-https://de.wikipedia.org/wiki/Bild_am_Sonntag#/media/Datei:Logo_Bild_am_Sonntag_(Bams).svg", "artists":[ "/api/v1/artis
-t/2/"]}' "https://oss.anjomro.de/api/v1/album/" -v -H "accept: /"
+ 	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"covertest","cover_url":"
+	https://de.wikipedia.org/wiki/Bild_am_Sonntag#/media/Datei:Logo_Bild_am_Sonntag_(Bams).svg", "artists":[ "/api/v1/artis
+	t/2/"]}' "https://oss.anjomro.de/api/v1/album/" -v -H "accept: /"
 
 PUT-Request: Put album 5
 
