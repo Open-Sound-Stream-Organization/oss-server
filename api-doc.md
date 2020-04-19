@@ -203,3 +203,22 @@ https://oss.anjomro.de/api/v1/artist/
 | end  | Death/ Group dissolved/ blank if still together | no                         |
 | tags       | Tags                                | no                         |
 </details>
+
+<details>
+	<summary>Curl-Request-Examples</summary>
+GET-Request: Get artist 1
+	
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/artist/1/" -v
+
+POST-Request: Post new artist
+
+ Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"DieExmatrikulatoren","formation_types":"Group"}' "https://oss.anjomro.de/api/v1/artist/" -v -H "accept: /"
+
+PUT-Request: Put name of of artist 3
+
+Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"DieExmatrikulatoren2"}'  https://oss.anjomro.de/api/v1/artist/3/ -v -H "accept: /"
+
+DELETE-Request: Delete artist 2
+
+Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/artist/2/ -v -H "accept: /"
+</details>
