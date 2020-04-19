@@ -31,7 +31,7 @@ The example query will get all artists that are saved in the personal music libr
 ---------------------------------------------------------------------------
  
  
-### Request Track objects 
+## Request Track objects 
 
 Request URL:
 https://oss.anjomro.de/api/v1/song/
@@ -183,3 +183,23 @@ DELETE-Request: Delete album 5
 	}
 </details>
 
+
+
+## Request Artist objects 
+
+Request URL:
+https://oss.anjomro.de/api/v1/artist/
+
+<details>
+	<summary>Field Reference</summary>
+
+| identifier 		| explanation                         | mandatory                  |
+|:----------:|:-----------------------------------:|:--------------------------:|
+| id         	| Identifier                          | is generated automatically |
+| name       | name of artist                       | yes                        |
+| formation_types    	| Type of Artist (Person/Group/etc.)              | yes                         |
+| area     | URL to the area of artist | no                        |
+| begin       | Date of persons birth/Date of group formation  | no                         |
+| end  | Death/ Group dissolved/ blank if still together | no                         |
+| tags       | Tags                                | no                         |
+</details>
