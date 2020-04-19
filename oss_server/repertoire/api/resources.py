@@ -90,7 +90,7 @@ class TrackResource(ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['audio', 'user']
+        exclude = ['user']
 
     def obj_create(self, bundle, **kwargs):
         return super(TrackResource, self).obj_create(bundle, user=bundle.request.user)
@@ -108,7 +108,7 @@ class SongResource(TrackResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['audio', 'user']
+        exclude = ['user']
 
 
 class PlaylistResource(ModelResource):
