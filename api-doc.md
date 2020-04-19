@@ -51,11 +51,11 @@ POST-Request:
 
 PUT-Request:
 
-		TODO: curl-example-put-request
+Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"title":"new title"}'  https://oss.anjomro.de/api/v1/track/22/ -v -H "accept: /"
 
 DELETE-Request:
 
-		TODO: curl-example-delete-request
+Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/track/22/ -v -H "accept: /"
 </details>
 <details>
 	<summary>Sample GET-Response:</summary>
@@ -123,10 +123,10 @@ t/2/"]}' "https://oss.anjomro.de/api/v1/album/" -v -H "accept: /"
 
 PUT-Request:
 
-		TODO: curl-example-put-request
+		Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"cov ertestnew"}' "https://oss.anjomro.de/api/v1/album/218/" -v -H "accept: /"
 
 DELETE-Request:
 
-		TODO: curl-example-delete-request
+		TODO: Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/album/218/ -v -H"accept: /"
 </details>
 
