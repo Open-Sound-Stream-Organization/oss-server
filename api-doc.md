@@ -37,25 +37,38 @@ Request URL:
 https://oss.anjomro.de/api/v1/song/
 	(`song` instead of `track` to avoid triggering keyword based adblockers)
 
+<details>
+	<summary>Field Reference</summary>
+
+| identifier | explanation                                 | mandatory                  |
+|:----------:|:-------------------------------------------:|:--------------------------:|
+| id         | Identifier                                  | is generated automatically |
+| title      | name of song                                | yes                        |
+| album      | URL to the album the song appears           | yes                        |
+| artist     | URL list of the artists that appear         | yes                        |
+| mbid       | -                                           | no                         |
+| audio      | Audio File, more information in File Upload | no, but sensefull          |
+| tags       | Tags                                        | no                         |
+</details>
  
 <details>
 	<summary>Curl-Request-Examples</summary>
-GET-Request:
+GET-Request: Get song 1
 	
-	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/song/" -v
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/song/1/" -v
 
-POST-Request:
+POST-Request: Add new song
 
  Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"title":"test5","album":"/api/v1
-/album/1/", "artists":[ "/api/v1/artist/2/"]}' "https://oss.anjomro.de/api/v1/track/" -v -H "accept: /"
+/album/1/", "artists":[ "/api/v1/artist/2/"]}' "https://oss.anjomro.de/api/v1/song/" -v -H "accept: /"
 
-PUT-Request:
+PUT-Request: Put title of song 1
 
-Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"title":"new title"}'  https://oss.anjomro.de/api/v1/track/22/ -v -H "accept: /"
+Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"title":"new title"}'  https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
 
 DELETE-Request:
 
-Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/track/22/ -v -H "accept: /"
+Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
 </details>
 <details>
 	<summary>Sample GET-Response:</summary>
@@ -86,21 +99,7 @@ Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/tra
 		]
 	}
 </details>
-<details>
-	<summary>Field Reference</summary>
 
-|  identifier  |              Explanation              | required when creating a new object |
-|:------------:|:-------------------------------------:|:-----------------------------------:|
-|      id      |                  ...                  |     no, generated automatically     |
-|     title    |             name of track             |                 yes                 |
-|     album    | Link to the album the song appears in |                 yes                 |
-|    artists   |                                       |                                     |
-|     mbid     |             Musicbrainz ID            |                  no                 |
-|     audio    |                                       |                                     |
-|     tags     |                                       |                                     |
-| resource_uri |                                       |                                     |
-
-</details>
 
 
 ## Request Album objects 
