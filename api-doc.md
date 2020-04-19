@@ -57,7 +57,7 @@ GET-Request: Get song 1
 	
 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/song/1/" -v
 
-POST-Request: Add new song
+POST-Request: Post new song
 
  Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"title":"test5","album":"/api/v1
 /album/1/", "artists":[ "/api/v1/artist/2/"]}' "https://oss.anjomro.de/api/v1/song/" -v -H "accept: /"
@@ -66,7 +66,7 @@ PUT-Request: Put title of song 1
 
 Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"title":"new title"}'  https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
 
-DELETE-Request:
+DELETE-Request: Delete song 1
 
 Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
 </details>
@@ -107,25 +107,79 @@ Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/son
 Request URL:
 https://oss.anjomro.de/api/v1/album/
 
+<details>
+	<summary>Field Reference</summary>
+
+| identifier | explanation                         | mandatory                  |
+|:----------:|:-----------------------------------:|:--------------------------:|
+| id         | Identifier                          | is generated automatically |
+| name       | name of album                       | yes                        |
+| release    | first release of album              | no                         |
+| artist     | URL list of the artists that appear | yes                        |
+| mbid       | -                                   | no                         |
+| cover_url  | URL for cover                       | no                         |
+| cover_file | Image of cover                      | no                         |
+| tags       | Tags                                | no                         |
+</details>
  
 <details>
 	<summary>Curl-Request-Examples</summary>
-GET-Request:
+GET-Request: Get album 5
 	
-	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/album/" -v
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/album/5/" -v
 
-POST-Request:
+POST-Request: Post new album
 
  Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"covertest","cover_url":"
 https://de.wikipedia.org/wiki/Bild_am_Sonntag#/media/Datei:Logo_Bild_am_Sonntag_(Bams).svg", "artists":[ "/api/v1/artis
 t/2/"]}' "https://oss.anjomro.de/api/v1/album/" -v -H "accept: /"
 
-PUT-Request:
+PUT-Request: Put album 5
 
-		Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"cov ertestnew"}' "https://oss.anjomro.de/api/v1/album/218/" -v -H "accept: /"
+		Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"covertestnew"}' "https://oss.anjomro.de/api/v1/album/5/" -v -H "accept: /"
 
-DELETE-Request:
+DELETE-Request: Delete album 5
 
-		TODO: Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/album/218/ -v -H"accept: /"
+		Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/album/5/ -v -H "accept: /"
+</details>
+
+<details>
+	<summary>Sample GET-Response:</summary>
+
+	{
+		"meta": {
+				"limit": 200,
+				"next": null,
+				"offset": 0,
+				"previous": null,
+				"total_count": 1
+		},
+		"objects": [
+				{
+				                "name": "A little Jazz Mass",
+						"release": null
+						"artists": ["/api/v1/artist/1"],
+						"cover_url": null,
+						"audio": "repertoire/song_file/1/",
+						"id": 1,
+						"mbid": "dec720fb-2cdb-4ab6-9217-9aea4ee48566",
+						"resource_uri": "/api/v1/album/1",
+						"songs": ["/api/v1/track/1",
+							  "/api/v1/track/2",
+							  "/api/v1/track/3",
+							  "/api/v1/track/8", 
+						 	  "/api/v1/track/9", 
+						 	  "/api/v1/track/14", 
+						 	  "/api/v1/track/15", 
+						 	  "/api/v1/track/23"],
+						"tags": [
+								"/api/v1/tag/1/"
+						],
+						
+				}
+				
+				
+		]
+	}
 </details>
 
