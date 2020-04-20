@@ -60,15 +60,15 @@ GET-Request: Get song 1
 POST-Request: Post new song
 
  	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"title":"test5","album":"/api/v1
-	/album/1/", "artists":[ "/api/v1/artist/2/"]}' "https://oss.anjomro.de/api/v1/song/" -v -H "accept: /"
+	/album/1/", "artists":[ "/api/v1/artist/2/"]}' "https://oss.anjomro.de/api/v1/song/" -v 
 
 PUT-Request: Put title of song 1
 
-	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"title":"new title"}' 		 	https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"title":"new title"}' 		 	https://oss.anjomro.de/api/v1/song/1/ -v 
 
 DELETE-Request: Delete song 1
 
-	Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/song/1/ -v -H "accept: /"
+	curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/song/1/ -v 
 </details>
 <details>
 	<summary>Sample GET-Response:</summary>
@@ -112,7 +112,7 @@ https://oss.anjomro.de/api/v1/album/
 
 | identifier | explanation                         | mandatory                  |
 |:----------:|:-----------------------------------:|:--------------------------:|
-| id         | Identifier                          | is generated automatically |
+| mbid       | Identifier                          | is generated automatically |
 | name       | name of album                       | yes                        |
 | release    | first release of album              | no                         |
 | artist     | URL list of the artists that appear | yes                        |
@@ -130,17 +130,17 @@ GET-Request: Get album 5
 
 POST-Request: Post new album
 
- 	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"covertest","cover_url":"
+ 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"covertest","cover_url":"
 	https://de.wikipedia.org/wiki/Bild_am_Sonntag#/media/Datei:Logo_Bild_am_Sonntag_(Bams).svg", "artists":[ "/api/v1/artis
-	t/2/"]}' "https://oss.anjomro.de/api/v1/album/" -v -H "accept: /"
+	t/2/"]}' "https://oss.anjomro.de/api/v1/album/" -v 
 
 PUT-Request: Put album 5
 
-		Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"covertestnew"}' "https://oss.anjomro.de/api/v1/album/5/" -v -H "accept: /"
+		curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"covertestnew"}' "https://oss.anjomro.de/api/v1/album/5/" -v -H "accept: /
 
 DELETE-Request: Delete album 5
 
-		Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/album/5/ -v -H "accept: /"
+		curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/album/5/ -v
 </details>
 
 <details>
@@ -195,13 +195,27 @@ https://oss.anjomro.de/api/v1/artist/
 
 | identifier 		| explanation                         | mandatory                  |
 |:----------:|:-----------------------------------:|:--------------------------:|
-| id         	| Identifier                          | is generated automatically |
+| mbid         	| Identifier                          | is generated automatically |
 | name       | name of artist                       | yes                        |
-| formation_types    	| Type of Artist (Person/Group/etc.)              | yes                         |
+| formation_types    	| Type of Artist (Person/Group/etc.)   max_length=1             | yes                         |
 | area     | URL to the area of artist | no                        |
 | begin       | Date of persons birth/Date of group formation  | no                         |
 | end  | Death/ Group dissolved/ blank if still together | no                         |
 | tags       | Tags                                | no                         |
+
+<details>
+	<summary>formation_types</summary>
+
+| abbreviation 		| explanation             |
+|:----------:|:----------------------------------:|
+| P         	| Person 			  |
+| G         	| Group 			  |
+| O         	| Orchestra 			  |
+| C         	| Choir 			  |
+| F         	| Character 			  |
+| O         	| Other 			  |
+</details>
+
 </details>
 
 <details>
@@ -212,15 +226,15 @@ GET-Request: Get artist 1
 
 POST-Request: Post new artist
 
- 	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"DieExmatrikulatoren","formation_types":"Group"}' "https://oss.anjomro.de/api/v1/artist/" -v -H "accept: /"
+ 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"DieExmatrikulatoren","formation_types":"G","begin":"2020-04-20"}' "https://oss.anjomro.de/api/v1/artist/" -v
 
 PUT-Request: Put name of of artist 3
 
-	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"DieExmatrikulatoren2"}'  https://oss.anjomro.de/api/v1/artist/3/ -v -H "accept: /"
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"DieExmatrikulatoren2"}'  https://oss.anjomro.de/api/v1/artist/3/ -v
 
 DELETE-Request: Delete artist 2
 
-	Curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/artist/2/ -v -H "accept: /"
+	curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/artist/2/ -v 
 </details>
 
 <details>
