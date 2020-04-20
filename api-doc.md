@@ -112,7 +112,7 @@ https://oss.anjomro.de/api/v1/album/
 
 | identifier | explanation                         | mandatory                  |
 |:----------:|:-----------------------------------:|:--------------------------:|
-| mbid       | Identifier                          | is generated automatically |
+| id         | Identifier                          | is generated automatically |
 | name       | name of album                       | yes                        |
 | release    | first release of album              | no                         |
 | artist     | URL list of the artists that appear | yes                        |
@@ -195,7 +195,8 @@ https://oss.anjomro.de/api/v1/artist/
 
 | identifier 		| explanation                         | mandatory                  |
 |:----------:|:-----------------------------------:|:--------------------------:|
-| mbid         	| Identifier                          | is generated automatically |
+| id         | Identifier                          | is generated automatically |
+| mbid         	| musicbrainz_id                          | no |
 | name       | name of artist                       | yes                        |
 | formation_types    	| Type of Artist (Person/Group/etc.)   max_length=1             | yes                         |
 | area     | URL to the area of artist | no                        |
@@ -289,14 +290,15 @@ https://oss.anjomro.de/api/v1/area/
 
 | identifier 		| explanation                         | mandatory                  |
 |:----------:|:-----------------------------------:|:--------------------------:|
-| mbid         	| Identifier                          | is generated automatically |
+| id         | Identifier                          | is generated automatically |
+| mbid         	| musicbrainz_id                          | no |
 | name       | name of area                       | yes                        |
 | area_categories    	| Area type (Country/City/etc.)   max_length=1             | yes                         |
 | country_code     | iso-3166-1-code (DE/GB/FR etc.) | no                        |
 
 
 <details>
-	<summary>formation_types</summary>
+	<summary>area_categories</summary>
 
 | abbreviation 		| explanation             |
 |:----------:|:----------------------------------:|
@@ -352,6 +354,130 @@ DELETE-Request: Delete area
 					"resource_uri": "/api/v1/area/6", 
 					"type": ""
 				
+				}
+								
+		]
+	}
+</details>
+
+
+## Request Playlist objects 
+
+Request URL:
+https://oss.anjomro.de/api/v1/playlist/
+
+<details>
+	<summary>Field Reference</summary>
+
+| identifier 		| explanation                         | mandatory                  |
+|:----------:|:-----------------------------------:|:--------------------------:|
+| id         | Identifier                          | is generated automatically |
+| name       | name of playlist                       | yes                        |
+| tracks    	| tracks in playlist           | no                         |
+| tags     | tags in playlist  (Jazz etc.)| no                        |
+
+
+
+
+</details>
+
+<details>
+	<summary>Curl-Request-Examples</summary>
+GET-Request: Get playlist 1
+	
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/playlist/1/" -v
+
+POST-Request: Post new playlist
+
+ 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"Bestoff"}' "https://oss.anjomro.de/api/v1/playlist/" -v
+
+PUT-Request: Put name of playlist 4
+
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"Thebestsongsever"}'  https://oss.anjomro.de/api/v1/playlist/4/ -v
+
+DELETE-Request: Delete playlist 3
+
+	curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/playlist/3/ -v 
+</details>
+
+<details>
+	<summary>Sample GET-Response:</summary>
+
+	{
+		"meta": {
+				"limit": 200,
+				"next": null,
+				"offset": 0,
+				"previous": null,
+				"total_count": 1
+		},
+		"objects": [
+				{
+					"id": 5, 
+					"name": "GuteLauneRemix", 
+					"resource_uri": "/api/v1/playlist/5", 
+					"tags": []
+				}
+								
+		]
+	}
+</details>
+
+
+## Request Tag objects 
+
+Request URL:
+https://oss.anjomro.de/api/v1/playlist/
+
+<details>
+	<summary>Field Reference</summary>
+
+| identifier 		| explanation                         | mandatory                  |
+|:----------:|:-----------------------------------:|:--------------------------:|
+| id         | Identifier                          | is generated automatically |
+| name       | name of tag (Jazz etc.)             | yes                        |
+
+</details>
+
+<details>
+	<summary>Curl-Request-Examples</summary>
+GET-Request: Get tag 5
+	
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/tag/5/" -v
+
+POST-Request: Post new playlist
+
+ 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"Rock"}' "https://oss.anjomro.de/api/v1/tag/" -v
+
+PUT-Request: Put name of playlist 4
+
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"Jazz"}'  https://oss.anjomro.de/api/v1/tag/5/ -v
+
+DELETE-Request: Delete tag 3
+
+	curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/tag/3/ -v 
+</details>
+
+<details>
+	<summary>Sample GET-Response:</summary>
+
+	{
+		"meta": {
+				"limit": 200,
+				"next": null,
+				"offset": 0,
+				"previous": null,
+				"total_count": 1
+		},
+		"objects": [
+				{
+					"albums": [], 
+					"artists": [], 
+					"id": 7, 
+					"name": "Pop", 
+					"playlists": [], 
+					"resource_uri": "/api/v1/tag/7", 
+					"songs": []
 				}
 								
 		]
