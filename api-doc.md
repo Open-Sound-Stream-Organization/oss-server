@@ -213,7 +213,7 @@ https://oss.anjomro.de/api/v1/artist/
 | O         	| Orchestra 			  |
 | C         	| Choir 			  |
 | F         	| Character 			  |
-| O         	| Other 			  |
+| E         	| Other 			  |
 </details>
 
 </details>
@@ -228,7 +228,7 @@ POST-Request: Post new artist
 
  	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"DieExmatrikulatoren","formation_types":"G","begin":"2020-04-20"}' "https://oss.anjomro.de/api/v1/artist/" -v
 
-PUT-Request: Put name of of artist 3
+PUT-Request: Put name of artist 3
 
 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"DieExmatrikulatoren2"}'  https://oss.anjomro.de/api/v1/artist/3/ -v
 
@@ -274,6 +274,86 @@ DELETE-Request: Delete artist 2
 				}
 				
 				
+		]
+	}
+</details>
+
+
+## Request Area objects 
+
+Request URL:
+https://oss.anjomro.de/api/v1/area/
+
+<details>
+	<summary>Field Reference</summary>
+
+| identifier 		| explanation                         | mandatory                  |
+|:----------:|:-----------------------------------:|:--------------------------:|
+| mbid         	| Identifier                          | is generated automatically |
+| name       | name of area                       | yes                        |
+| area_categories    	| Area type (Country/City/etc.)   max_length=1             | yes                         |
+| country_code     | iso-3166-1-code (DE/GB/FR etc.) | no                        |
+
+
+<details>
+	<summary>formation_types</summary>
+
+| abbreviation 		| explanation             |
+|:----------:|:----------------------------------:|
+| X         	| Country 			  |
+| L         	| Subdivision 			  |
+| C         	| County 			  |
+| M         	| Municipality 			  |
+| S         	| City 			  |
+| D         	| District 			  |
+| I         	| Island 			  |
+</details>
+
+</details>
+
+<details>
+	<summary>Curl-Request-Examples</summary>
+GET-Request: Get area 2
+	
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/area/2/" -v
+
+POST-Request: Post new area
+
+ 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"name":"Mkg","area_categories":"X"}' "https://oss.anjomro.de/api/v1/area/" -v
+
+PUT-Request: Put name of area 3
+
+	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X PUT -d '{"name":"Schwieberdingen"}'  https://oss.anjomro.de/api/v1/area/3/ -v
+
+DELETE-Request: Delete area
+
+	curl -H 'Authorization: testapikey' -X DELETE  https://oss.anjomro.de/api/v1/area/4/ -v 
+</details>
+
+<details>
+	<summary>Sample GET-Response:</summary>
+
+	{
+		"meta": {
+				"limit": 200,
+				"next": null,
+				"offset": 0,
+				"previous": null,
+				"total_count": 1
+		},
+		"objects": [
+				{
+					"area_categories": "X", 
+					"artists": ["/api/v1/artist/1"],
+					"country_code": null, 
+					"id": 6, 
+					"mbid": "", 
+					"name": "Muenchen", 
+					"resource_uri": "/api/v1/area/6", 
+					"type": ""
+				
+				}
+								
 		]
 	}
 </details>
