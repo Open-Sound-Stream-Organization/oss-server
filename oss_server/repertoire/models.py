@@ -38,7 +38,7 @@ class Artist(Model):
         ("O", "Orchestra"),
         ("C", "Choir"),
         ("F", "Character"),
-        ("O", "Other"),
+        ("E", "Other"),
     ]
     type = CharField(max_length=1, choices=formation_types, verbose_name='Type of Artist (Person/Group/etc.)')
     area = ForeignKey(Area, on_delete=PROTECT, blank=True, null=True, verbose_name='Area of Artist')
