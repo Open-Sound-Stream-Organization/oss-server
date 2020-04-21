@@ -157,7 +157,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "web_interface/oss-web/build/static"),
 ]
 
-MEDIA_ROOT = 'media/'
+MEDIA_ROOT = 'db/media/'
 MEDIA_URL = 'files/'
 
 TASTYPIE_ABSTRACT_APIKEY = True
@@ -169,7 +169,7 @@ TASTYPIE_SWAGGER_API_MODULE_LIST = (
 )
 
 TASTYPIE_SWAGGER_IGNORE_PATTERN_LIST = ['.DS_Store']
-TASTYPIE_SWAGGER_SERVER_URL = 'http://127.0.0.1:8000'
+TASTYPIE_SWAGGER_SERVER_URL = 'https://oss.anjomro.de'
 TASTYPIE_SWAGGER_OPEN_API_INFO = {
   "title": "Open Stream Server API",
   "description": "This is a sample server for a pet store.",
