@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+oss_server/db/media/
+.idea/
+oss_server/media
