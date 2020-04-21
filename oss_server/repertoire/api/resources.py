@@ -5,11 +5,13 @@ from tastypie.resources import ModelResource
 from repertoire.api.ApiKey import ApiKey
 from repertoire.api.ApiKeyOnlyAuthentication import ApiKeyOnlyAuthentication
 from repertoire.api.authorization import UserObjectsOnlyAuthorization
-from repertoire.models import Tag, Artist, Album, Playlist, Track, Settings, Area
+from repertoire.models import Tag, Artist, Album, Playlist, Track, Settings, Area, TrackInPlaylist
 
 
 class AreaResource(ModelResource):
-    artists = ToManyField('repertoire.api.resources.ArtistResource', 'artist_set', related_name='artist', blank=True, null=True)
+    artists = ToManyField('repertoire.api.resources.ArtistResource', 'artist_set', related_name='artist', blank=True,
+                          null=True)
+
     class Meta:
         queryset = Area.objects.all()
         allowed_methods = ['get', 'post', 'put', 'delete']
@@ -22,8 +24,9 @@ class AreaResource(ModelResource):
     def obj_create(self, bundle, **kwargs):
         return super(AreaResource, self).obj_create(bundle, user=bundle.request.user)
 
+
 class TagResource(ModelResource):
-    artists = ToManyField('repertoire.api.resources.ArtistResource','artist_set', blank=True, null=True)
+    artists = ToManyField('repertoire.api.resources.ArtistResource', 'artist_set', blank=True, null=True)
     albums = ToManyField('repertoire.api.resources.AlbumResource', 'album_set', blank=True, null=True)
     songs = ToManyField('repertoire.api.resources.TrackResource', 'track_set', blank=True, null=True)
     playlists = ToManyField('repertoire.api.resources.PlaylistResource', 'playlist_set', blank=True, null=True)
@@ -61,7 +64,7 @@ class ArtistResource(ModelResource):
 
 class AlbumResource(ModelResource):
     tags = ToManyField(TagResource, 'tags', blank=True, null=True)
-    artists = ToManyField("repertoire.api.resources.ArtistResource",'artist', blank=True, null=True)
+    artists = ToManyField("repertoire.api.resources.ArtistResource", 'artist', blank=True, null=True)
     songs = ToManyField("repertoire.api.resources.TrackResource", 'track_set', blank=True, null=True)
 
     class Meta:
@@ -81,7 +84,7 @@ class TrackResource(ModelResource):
     tags = ToManyField(TagResource, 'tags', blank=True,
                        null=True)
     album = ToOneField("repertoire.api.resources.AlbumResource", 'album', blank=True, null=True)
-    artists = ToManyField("repertoire.api.resources.ArtistResource",'artist', blank=True, null=True)
+    artists = ToManyField("repertoire.api.resources.ArtistResource", 'artist', blank=True, null=True)
 
     class Meta:
         queryset = Track.objects.all()
@@ -99,7 +102,9 @@ class TrackResource(ModelResource):
         bundle.data['audio'] = "repertoire/song_file/{}/".format(bundle.data['id'])
         return bundle
 
+
 class SongResource(TrackResource):
+    playlists = ToManyField("repertoire.api.resources.PlaylistResource", 'playset_set', full=False, blank=True, null=True)
     class Meta:
         resource_name = 'song'
         queryset = Track.objects.all()
@@ -111,9 +116,24 @@ class SongResource(TrackResource):
         exclude = ['user']
 
 
+class SongInPlaylistResource(ModelResource):
+    playlist = ToOneField("repertoire.api.resources.PlaylistResource", 'playlist', full=False)
+    song = ToOneField(SongResource, 'track', full=True, full_detail=True, full_list=True)
+    class Meta:
+        queryset = TrackInPlaylist.objects.all()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        authentication = MultiAuthentication(BasicAuthentication(realm="Open Sound Stream: SongResource"),
+                                             ApiKeyOnlyAuthentication())
+        authorization = UserObjectsOnlyAuthorization()
+        always_return_data = True
+        exclude = ['user']
+
+
 class PlaylistResource(ModelResource):
     tags = ToManyField(TagResource, attribute=lambda bundle: Tag.objects.filter(playlist=bundle.obj), blank=True,
                        null=True, full=True, full_detail=True, full_list=False)
+    songsinplaylist = ToManyField(SongInPlaylistResource, 'trackinplaylist_set', blank=True, null=True, full=True,
+                                  full_detail=True, full_list=True)
 
     class Meta:
         queryset = Playlist.objects.all()
