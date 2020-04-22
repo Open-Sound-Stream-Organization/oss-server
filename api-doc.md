@@ -48,14 +48,16 @@ The encoder returns "dGVzdHVzZXI6dGVzdHVzZXI=" in this example.
 YOu still have to add a purpose
 
 Now run 
-curl -H "Conte	nt-Type: application/json" -H "Authorization: Basic dGVzdHVzZXI6dGVzdHVzZXI=" -X POST -d '{"purpose":"B
-ro wser-Session FireFox 20.05"}' "https://oss.anjomro.de/api/v1/apikey" -v
+
+	curl -H "Conte	nt-Type: application/json" -H "Authorization: Basic dGVzdHVzZXI6dGVzdHVzZXI=" -X POST -d '{"purpose":"Bro wser-Session FireFox 20.05"}' "https://oss.anjomro.de/api/v1/apikey" -v
 
 Now you retun your API Key:
-{"created": "2020-04-22T13:41:05.659528", "id": 9, "key": "DAy9xQd41dsmxWoXStIYNe2ON2AbVxdTF0PJAvh7ray3GtbZg4J-F-C14aBDv_BLbYOIbd9ACFdYCAb7czhdxoxuds4PILqBCWm-30LCz6x3CbTD9LeVpsXj2SFH2V5Raclt28QYDKU8Z5igtWTVNNAdvL4s4DLj9z2X9HkfgMs", "purpose": "Bro wser-Session FireFox 20.05", "resource_uri": "/api/v1/apikey/9"}* 
+
+	{"created": "2020-04-22T13:41:05.659528", "id": 9, "key": "DAy9xQd41dsmxWoXStIYNe2ON2AbVxdTF0PJAvh7ray3GtbZg4J-F-C14aBDv_BLbYOIbd9ACFdYCAb7czhdxoxuds4PILqBCWm-30LCz6x3CbTD9LeVpsXj2SFH2V5Raclt28QYDKU8Z5igtWTVNNAdvL4s4DLj9z2X9HkfgMs", "purpose": "Bro wser-Session FireFox 20.05", "resource_uri": "/api/v1/apikey/9"}* 
 
 The example query now would be
-curl -H 'Content-Type: application/json' -H 'Authorization: DAy9xQd41dsmxWoXStIYNe2ON2AbVxdTF0PJAvh7ray3GtbZg4J-F-C14aBDv_BLbYOIbd9ACFdYCAb7czhdxoxuds4PILqBCWm-30LCz6x3CbTD9LeVpsXj2SFH2V5Raclt28QYDKU8Z5igtWTVNNAdvL4s4DLj9z2X9HkfgMs'  -X GET "https://oss.anjomro.de/api/v1/artist/" -v
+
+	curl -H 'Content-Type: application/json' -H 'Authorization: DAy9xQd41dsmxWoXStIYNe2ON2AbVxdTF0PJAvh7ray3GtbZg4J-F-C14aBDv_BLbYOIbd9ACFdYCAb7czhdxoxuds4PILqBCWm-30LCz6x3CbTD9LeVpsXj2SFH2V5Raclt28QYDKU8Z5igtWTVNNAdvL4s4DLj9z2X9HkfgMs'  -X GET "https://oss.anjomro.de/api/v1/artist/" -v
 
 
 
