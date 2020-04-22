@@ -28,8 +28,37 @@ URL depends on the the resource that needs to be accessed and the server where t
 The example query will get all artists that are saved in the personal music library.
 
 	curl -H 'Content-Type: application/json' -H 'Authorization: myapikey'  -X GET "https://oss.anjomro.de/api/v1/artist/" -v
----------------------------------------------------------------------------
- 
+	
+This example query shows a view of all artists. With the URL "https://oss.anjomro.de/api/v1/artist/1/" for example, the data of the first artist can be displayed. Accordingly, the HTTP methods are applied to this URL to modify the entry of the first artist. The following examples demonstrate the handling of a concrete entry like first artist or  third album etc.
+
+But before that it must be clarified how to get an API key:
+
+-------------------------------------------------
+
+## Request API key
+As mentioned above, an API key is ALWAYS required for executing commands. To get it, you must first register. Then you have a username and password. Now it is possible to request your API key from OSS. This will now be explained by way of an example:
+
+user:     testuser
+password: testuser 
+
+You need a base 64 encoder, for example https://www.base64encode.org/
+Encode user:passwort so in this example it is testuser:testuser.
+
+The encoder returns "dGVzdHVzZXI6dGVzdHVzZXI=" in this example.
+YOu still have to add a purpose
+
+Now run 
+curl -H "Conte	nt-Type: application/json" -H "Authorization: Basic dGVzdHVzZXI6dGVzdHVzZXI=" -X POST -d '{"purpose":"B
+ro wser-Session FireFox 20.05"}' "https://oss.anjomro.de/api/v1/apikey" -v
+
+Now you retun your API Key:
+{"created": "2020-04-22T13:41:05.659528", "id": 9, "key": "DAy9xQd41dsmxWoXStIYNe2ON2AbVxdTF0PJAvh7ray3GtbZg4J-F-C14aBDv_BLbYOIbd9ACFdYCAb7czhdxoxuds4PILqBCWm-30LCz6x3CbTD9LeVpsXj2SFH2V5Raclt28QYDKU8Z5igtWTVNNAdvL4s4DLj9z2X9HkfgMs", "purpose": "Bro wser-Session FireFox 20.05", "resource_uri": "/api/v1/apikey/9"}* 
+
+The example query now would be
+curl -H 'Content-Type: application/json' -H 'Authorization: DAy9xQd41dsmxWoXStIYNe2ON2AbVxdTF0PJAvh7ray3GtbZg4J-F-C14aBDv_BLbYOIbd9ACFdYCAb7czhdxoxuds4PILqBCWm-30LCz6x3CbTD9LeVpsXj2SFH2V5Raclt28QYDKU8Z5igtWTVNNAdvL4s4DLj9z2X9HkfgMs'  -X GET "https://oss.anjomro.de/api/v1/artist/" -v
+
+
+
  
 ## Request Track objects 
 
