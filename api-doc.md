@@ -49,7 +49,7 @@ YOu still have to add a purpose
 
 Now run 
 
-	curl -H "Conte	nt-Type: application/json" -H "Authorization: Basic dGVzdHVzZXI6dGVzdHVzZXI=" -X POST -d '{"purpose":"Bro wser-Session FireFox 20.05"}' "https://oss.anjomro.de/api/v1/apikey" -v
+	curl -H "Content-Type: application/json" -H "Authorization: Basic dGVzdHVzZXI6dGVzdHVzZXI=" -X POST -d '{"purpose":"Bro wser-Session FireFox 20.05"}' "https://oss.anjomro.de/api/v1/apikey" -v
 
 Now you retun your API Key:
 
