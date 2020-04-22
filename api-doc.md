@@ -373,12 +373,22 @@ https://oss.anjomro.de/api/v1/playlist/
 |:----------:|:-----------------------------------:|:--------------------------:|
 | id         | Identifier                          | is generated automatically |
 | name       | name of playlist                       | yes                        |
-| tracks    	| tracks in playlist           | no                         |
+| songsinplaylist     	| tracks in playlist           | no                         |
 | tags     | tags in playlist  (Jazz etc.)| no                        |
 
 
+<details>
+	<summary>songsinplaylist</summary>
+
+| identifier 		| explanation                         | mandatory                  |
+|:----------:|:-----------------------------------:|:--------------------------:|
+| id         | Identifier                          | is generated automatically |
+| playlist       | name of playlist                       | no                        |
+| song     	| track in playlist           | yes                         |
+| sort_number     | opportunity to sort| yes                        |
 
 
+</details>
 </details>
 
 <details>
@@ -413,10 +423,66 @@ DELETE-Request: Delete playlist 3
 		},
 		"objects": [
 				{
-					"id": 5, 
-					"name": "GuteLauneRemix", 
-					"resource_uri": "/api/v1/playlist/5", 
-					"tags": []
+				"id": 5, 
+				"name": "GuteLauneRemix", 
+				"resource_uri": "/api/v1/playlist/5", 
+				"songsinplaylist": 
+					[
+					{
+						"id": 4, 
+						"playlist": "/api/v1/playlist/5",
+						"resource_uri": "/api/v1/songinplaylist/4", 
+						"song": {
+							"album": "/api/v1/album/1", 
+							"artists": ["/api/v1/artist/4"], 
+							"audio": "repertoire/song_file/3/", 
+							"id": 3, 
+							"mbid": null, 
+							"playlists": ["/api/v1/playlist/5"], 
+							"resource_uri": "/api/v1/song/3", 
+							"tags": [], 
+							"title": "TheTrackTitle"}, 
+						"sort_number": 1
+					}, 
+					{
+						"id": 5, 
+						"playlist": "/api/v1/playlist/5", 
+						"resource_uri": "/api/v1/songinplaylist/5", 
+						"song": {
+							"album": "/api/v1/album/517", 
+							"artists": ["/api/v1/artist/557", 
+							"/api/v1/artist/566"], 
+							"audio": "repertoire/song_file/93/", 
+							"id": 93, 
+							"mbid": null, 
+							"playlists": ["/api/v1/playlist/5"], 
+							"resource_uri": "/api/v1/song/93", 
+							"tags": [], 
+							"title": "The Souls's Children"}, 
+						"sort_number": 634
+					}
+				], 
+				"tags": [
+					{
+						"albums": [], 
+						"artists": [], 
+						"id": 6, 
+						"name": 
+						"Rock", 
+						"playlists": ["/api/v1/playlist/5"], 
+						"resource_uri": "/api/v1/tag/6", 
+						"songs": []
+					}, 
+					{
+						"albums": [], 
+						"artists": [], 
+						"id": 7, 
+						"name": "Pop", 
+						"playlists": ["/api/v1/playlist/5"], 
+						"resource_uri": "/api/v1/tag/7", 
+						"songs": []
+					}
+					]
 				}
 								
 		]
