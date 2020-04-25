@@ -28,17 +28,14 @@ if 'DJANGO_DEBUG' in os.environ:
     DEBUG = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "ToBeRead"
-if DEBUG:
-    SECRET_KEY = 'TotallyNotSecureKeyButItsJustForDebugging'
-else:
-    secret_key_path = Path('../secret_key.txt')
-    if not secret_key_path.is_file() or os.path.getsize(secret_key_path) < 32:
-        secret_key_file = secret_key_path.open('w')
-        secret_key_file.write(secrets.token_urlsafe(128))
-        secret_key_file.close()
-    with secret_key_path.open('r') as f:
-        SECRET_KEY = f.read().strip()
+SECRET_KEY = 'TotallyNotSecureKeyButItsJustForDebugging'
+secret_key_path = Path('db/secret_key.txt')
+if not secret_key_path.is_file() or os.path.getsize(secret_key_path) < 32:
+    secret_key_file = secret_key_path.open('w')
+    secret_key_file.write(secrets.token_urlsafe(128))
+    secret_key_file.close()
+with secret_key_path.open('r') as f:
+    SECRET_KEY = f.read().strip()
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 if 'DJANGO_HOST' in os.environ:
