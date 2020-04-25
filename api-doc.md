@@ -35,11 +35,12 @@ But before that it must be clarified how to get an API key:
 
 -------------------------------------------------
 
+
 ## Request API key
 As mentioned above, an API key is ALWAYS required for executing commands. To get it, you must first register. Then you have a username and password. Now it is possible to request your API key from OSS. This will now be explained by way of an example:
 
 user:     testuser
-password: testuser 
+password: testuser 	
 
 You need a base 64 encoder, for example https://www.base64encode.org/
 Encode user:passwort so in this example it is testuser:testuser.
@@ -59,7 +60,18 @@ The example query now would be
 
 	curl -H 'Content-Type: application/json' -H 'Authorization: DAy9xQd41dsmxWoXStIYNe2ON2AbVxdTF0PJAvh7ray3GtbZg4J-F-C14aBDv_BLbYOIbd9ACFdYCAb7czhdxoxuds4PILqBCWm-30LCz6x3CbTD9LeVpsXj2SFH2V5Raclt28QYDKU8Z5igtWTVNNAdvL4s4DLj9z2X9HkfgMs'  -X GET "https://oss.anjomro.de/api/v1/artist/" -v
 
+## Request for Audio files
+An important aspect of OSS is to upload and download audio files. 
+This doen't workout with the JSON content type as the other data:
+<details>
+	<summary>Curl-Request-Examples</summary>
+	PUT-Request: PUT/upload respective audio file to song 261
 
+	Curl -H 'Authorization: testapikey' -F 'audio=@C:\Users\nikla_y88vj7d\Downloads\imperial_march.wav' -X PUT "https://oss.anjomro.de/api/v1/song/261/" -v
+	
+   GET-Request: GET/download respective audio file from song 261
+ 
+ 	Curl -H 'Authorization: testapikey' -X GET "https://oss.anjomro.de/repertoire/song_file/261/" -v
 
  
 ## Request Track objects 
