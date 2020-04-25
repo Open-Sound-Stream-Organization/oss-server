@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db.models import Model, CharField, TextField, ForeignKey, ManyToManyField, CASCADE, PROTECT, IntegerField, DateField, ImageField, FileField
 from django.db.models import Q
+from django.db import models
 
 class Tag(Model):
     name = CharField(max_length=1024, verbose_name='Tag name')

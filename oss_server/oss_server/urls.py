@@ -17,8 +17,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
 from repertoire.api.v1 import v1_api
+from django.contrib import admin
+from django.urls import path
+from repertoire import views as v
 
 urlpatterns = [
+    path("register/", v.register, name="register"),
     path('admin/', admin.site.urls),
     path('repertoire/', include('repertoire.urls', namespace='repertoire')),
     url(r'^api/', include(v1_api.urls)),
