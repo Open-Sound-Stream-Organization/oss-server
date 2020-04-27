@@ -46,7 +46,7 @@ You need a base 64 encoder, for example https://www.base64encode.org/
 Encode user:passwort so in this example it is testuser:testuser.
 
 The encoder returns "dGVzdHVzZXI6dGVzdHVzZXI=" in this example.
-YOu still have to add a purpose
+You still have to add a purpose
 
 Now run 
 
@@ -64,15 +64,16 @@ The example query now would be
 An important aspect of OSS is to upload and download audio files. 
 This doen't workout with the JSON content type as the other data:
 <details>
-	<summary>Curl-Request-Examples</summary>
+	<summary>curl-Request-Examples</summary>
 	PUT-Request: PUT/upload respective audio file to song 261
 
-	Curl -H 'Authorization: testapikey' -F 'audio=@C:\Users\nikla_y88vj7d\Downloads\imperial_march.wav' -X PUT "https://oss.anjomro.de/api/v1/song/261/" -v
+	curl -H 'Authorization: testapikey' -F 'audio=@/home/username/path/to/audio.mp3' -X PUT "https://oss.anjomro.de/api/v1/song/261/" -v
 	
    GET-Request: GET/download respective audio file from song 261
  
- 	Curl -H 'Authorization: testapikey' -X GET "https://oss.anjomro.de/repertoire/song_file/261/" -v
+ 	curl -H 'Authorization: testapikey' -X GET "https://oss.anjomro.de/repertoire/song_file/261/" -v
 
+</details>
  
 ## Request Track objects 
 
@@ -95,14 +96,14 @@ https://oss.anjomro.de/api/v1/song/
 </details>
  
 <details>
-	<summary>Curl-Request-Examples</summary>
+	<summary>curl-Request-Examples</summary>
 GET-Request: Get song 1
 	
 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/song/1/" -v
 
 POST-Request: Post new song
 
- 	Curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"title":"test5","album":"/api/v1
+ 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey' -X POST -d '{"title":"test5","album":"/api/v1
 	/album/1/", "artists":[ "/api/v1/artist/2/"]}' "https://oss.anjomro.de/api/v1/song/" -v 
 
 PUT-Request: Put title of song 1
@@ -357,7 +358,7 @@ https://oss.anjomro.de/api/v1/area/
 </details>
 
 <details>
-	<summary>Curl-Request-Examples</summary>
+	<summary>curl-Request-Examples</summary>
 GET-Request: Get area 2
 	
 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/area/2/" -v
@@ -435,7 +436,7 @@ https://oss.anjomro.de/api/v1/playlist/
 </details>
 
 <details>
-	<summary>Curl-Request-Examples</summary>
+	<summary>curl-Request-Examples</summary>
 GET-Request: Get playlist 1
 	
 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/playlist/1/" -v
@@ -549,7 +550,7 @@ https://oss.anjomro.de/api/v1/playlist/
 </details>
 
 <details>
-	<summary>Curl-Request-Examples</summary>
+	<summary>curl-Request-Examples</summary>
 GET-Request: Get tag 5
 	
 	curl -H 'Content-Type: application/json' -H 'Authorization: testapikey'  -X GET "https://oss.anjomro.de/api/v1/tag/5/" -v
