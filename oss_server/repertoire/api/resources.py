@@ -4,9 +4,10 @@ from tastypie.resources import ModelResource
 
 from repertoire.api.ApiKey import ApiKey
 from repertoire.api.MultipartUploadMixin import MultipartResourceMixin
-from repertoire.api.ApiKeyOnlyAuthentication import ApiKeyOnlyAuthentication
+from repertoire.api.ApiKeyOnlyAuthentication import ApiKeyOnlyAuthentication, ApiKeyOnlyOnSelfDelete
 from repertoire.api.authorization import UserObjectsOnlyAuthorization
 from repertoire.models import Tag, Artist, Album, Playlist, Track, Settings, Area, TrackInPlaylist
+
 
 class AreaResource(ModelResource):
     artists = ToManyField('repertoire.api.resources.ArtistResource', 'artist_set', related_name='artist', blank=True,
@@ -28,7 +29,7 @@ class AreaResource(ModelResource):
 class TagResource(ModelResource):
     artists = ToManyField('repertoire.api.resources.ArtistResource', 'artist_set', blank=True, null=True)
     albums = ToManyField('repertoire.api.resources.AlbumResource', 'album_set', blank=True, null=True)
-    songs = ToManyField('repertoire.api.resources.TrackResource', 'track_set', blank=True, null=True)
+    songs = ToManyField('repertoire.api.resources.SongResource', 'track_set', blank=True, null=True)
     playlists = ToManyField('repertoire.api.resources.PlaylistResource', 'playlist_set', blank=True, null=True)
 
     class Meta:
@@ -47,7 +48,7 @@ class TagResource(ModelResource):
 class ArtistResource(ModelResource):
     tags = ToManyField(TagResource, 'tags', blank=True)
     albums = ToManyField("repertoire.api.resources.AlbumResource", 'album_set', blank=True, null=True)
-    songs = ToManyField("repertoire.api.resources.TrackResource", 'track_set', blank=True, null=True)
+    songs = ToManyField("repertoire.api.resources.SongResource", 'track_set', blank=True, null=True)
 
     class Meta:
         queryset = Artist.objects.filter()
@@ -65,7 +66,7 @@ class ArtistResource(ModelResource):
 class AlbumResource(ModelResource):
     tags = ToManyField(TagResource, 'tags', blank=True, null=True)
     artists = ToManyField("repertoire.api.resources.ArtistResource", 'artist', blank=True, null=True)
-    songs = ToManyField("repertoire.api.resources.TrackResource", 'track_set', blank=True, null=True)
+    songs = ToManyField("repertoire.api.resources.SongResource", 'track_set', blank=True, null=True)
 
     class Meta:
         queryset = Album.objects.all()
@@ -105,6 +106,7 @@ class TrackResource(MultipartResourceMixin, ModelResource):
 class SongResource(TrackResource):
     audio = FileField(attribute='audio', blank=True, null=True)
     playlists = ToManyField("repertoire.api.resources.PlaylistResource", 'playlist_set', full=False, blank=True, null=True)
+
     class Meta:
         resource_name = 'song'
         queryset = Track.objects.all()
@@ -153,7 +155,9 @@ class ApiKeyResource(ModelResource):
         queryset = ApiKey.objects.all()
         allowed_methods = ['get', 'post', 'delete']
         always_return_data = True
-        authentication = BasicAuthentication(realm="Open Sound Stream: ApiKeyResource")
+        authentication = MultiAuthentication(
+                            BasicAuthentication(realm="Open Sound Stream: ApiKeyResource"),
+                            ApiKeyOnlyOnSelfDelete())
         authorization = UserObjectsOnlyAuthorization()
         excludes = ['key', 'shown', 'user']
 
