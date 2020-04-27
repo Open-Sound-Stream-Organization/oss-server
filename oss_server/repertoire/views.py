@@ -1,9 +1,24 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import FileResponse, HttpResponseForbidden, HttpResponseNotFound
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from .forms import RegisterForm
 
 from repertoire.api.ApiKey import ApiKey
 from repertoire.models import Track
+
+def register(response):
+    if response.method=="POST":
+        form = RegisterForm(response.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("/home")      # TODO: add a senseful redirect after registration
+    else:
+        form=RegisterForm()
+
+    return render(response,"repertoire/register.html", {"form":form} )
 
 
 def track_file(request, pk: int):
