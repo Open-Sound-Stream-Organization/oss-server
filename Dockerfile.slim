@@ -19,8 +19,8 @@ VOLUME /oss_server/db
 RUN apt update \
     && apt install python-pillow -y \
     && apt install git -y \
+    && apt install libchromaprint-dev ffmpeg
     && pip install pipenv \
     && pipenv install --system \
-    && python manage.py makemigrations --noinput \
     && python manage.py collectstatic --noinput
-CMD sh -c "python manage.py makemigrations && gunicorn --bind :8000 --workers 3 oss_server.wsgi"
+CMD sh -c "python manage.py migrate && gunicorn --bind :8000 --workers 3 oss_server.wsgi"

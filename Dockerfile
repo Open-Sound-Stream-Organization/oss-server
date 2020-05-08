@@ -25,9 +25,8 @@ COPY --from=builder /install /usr/local
 
 VOLUME /oss_server/db
 
-RUN apk add libjpeg zlib \
+RUN apk add libjpeg zlib chromaprint ffmpeg \
     && pip install six \
-    && python manage.py makemigrations --noinput \
     && python manage.py collectstatic --noinput
 
 CMD python manage.py migrate --noinput \

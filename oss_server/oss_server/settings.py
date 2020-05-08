@@ -157,7 +157,10 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = 'db/media/'
 MEDIA_URL = 'files/'
 
+OSS_VERSION = "0.1.0"
+
 TASTYPIE_ABSTRACT_APIKEY = True
+
 
 TASTYPIE_SWAGGER_API_MODULE_LIST = (
     {'path': 'repertoire.api.v1',
@@ -193,3 +196,9 @@ TASTYPIE_ALLOW_MISSING_SLASH = True
 #Data upload limit of 100MB
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600
+
+USE_ACOUSTID = False
+ACOUSTID_API_KEY = ''
+if 'ACOUSTID_API_KEY' in os.environ:
+    ACOUSTID_API_KEY = os.environ['ACOUSTID_API_KEY']
+    USE_ACOUSTID = True
