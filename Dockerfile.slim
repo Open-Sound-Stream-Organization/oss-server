@@ -19,7 +19,7 @@ VOLUME /oss_server/db
 RUN apt update \
     && apt install python-pillow -y \
     && apt install git -y \
-    && apt install libchromaprint-dev ffmpeg \
+    && apt install libchromaprint-dev ffmpeg -y \
     && pip install pipenv \
     && pipenv install --system \
     && python manage.py collectstatic --noinput
