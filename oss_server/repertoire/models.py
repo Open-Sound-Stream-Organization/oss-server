@@ -1,7 +1,13 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Model, CharField, TextField, ForeignKey, ManyToManyField, CASCADE, PROTECT, IntegerField, DateField, ImageField, FileField
 from django.db.models import Q
 from django.db import models
+from django.conf import settings
+import musicbrainzngs
+
+import repertoire
+
 
 class Tag(Model):
     name = CharField(max_length=1024, verbose_name='Tag name')
@@ -30,6 +36,7 @@ class Area(Model):
     def __str__(self):
         return self.name
 
+
 class Artist(Model):
     name = CharField(max_length=512, verbose_name='Name of Artist')
     mbid = CharField(max_length=64, blank=True, verbose_name='Musicbrainz ID')
@@ -50,7 +57,50 @@ class Artist(Model):
     
     def __str__(self):
         return "{}; '{}'".format(self.user.username, self.name)
-    
+
+    @staticmethod
+    def new_artist_by_mbid(user: User, mbid: str) -> 'Artist':
+        """
+        Creates a new Artist based on the MusicBrainz.org identifier
+        :param user: the user associated with the query
+        :param mbid: Musicbrainz.org identifier
+        :param artist_name: Optional hint for artist name, if specified no query will be executed
+        :return: newly created artist
+        """
+        musicbrainzngs.set_useragent('Open_Sound_Stream:Server', settings.OSS_VERSION)
+        try:
+            mbdata = musicbrainzngs.get_artist_by_id(mbid)
+        except musicbrainzngs.WebServiceError:
+            raise ConnectionError("The MusicBrainz Database could not be reached")
+        else:
+            artist = mbdata["artist"]
+            artistobj: Artist
+            artistobj, created = Artist.objects.get_or_create(user=user, name=artist["name"])
+            artistobj.mbid = mbid
+            for letter, formation in Artist.formation_types:
+                if formation == artist['type']:
+                    artistobj.type = letter
+                    break
+                else:
+                    artistobj.type = 'E' #other type
+            if 'life-span' in artist:
+                lifespan = artist['life-span']
+                if 'begin' in lifespan:
+                    artistobj.begin = lifespan['begin']
+                if 'end' in lifespan:
+                    artistobj.end = lifespan['end']
+            artistobj.save()
+            return artistobj
+
+    @staticmethod
+    def get_by_mbid( user: User, mbid: str, artist_name: str=None):
+        try:
+            return Artist.objects.get(user=user, mbid=mbid)
+        except ObjectDoesNotExist:
+            try:
+                return Artist.new_artist_by_mbid(user, mbid)
+            except ConnectionError:
+                return None
 
 
 class Album(Model):
