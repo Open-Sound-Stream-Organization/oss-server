@@ -9,7 +9,11 @@ class UserObjectsOnlyAuthorization(Authorization):
 
     def read_detail(self, object_list, bundle):
         # Is the requested object owned by the user?
-        return bundle.obj.user == bundle.request.user
+        if bundle.obj.pk is None:
+            #if e.g.schema is accessed
+            return True
+        else:
+            return bundle.obj.user == bundle.request.user
 
     def create_list(self, object_list, bundle):
         # Assuming they're auto-assigned to ``user``.

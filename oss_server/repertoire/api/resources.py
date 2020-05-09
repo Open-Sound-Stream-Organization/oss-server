@@ -29,7 +29,7 @@ class AreaResource(ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['user']
+        excludes = ['user']
 
     def obj_create(self, bundle, **kwargs):
         return super(AreaResource, self).obj_create(bundle, user=bundle.request.user)
@@ -48,7 +48,7 @@ class TagResource(ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['user']
+        excludes = ['user']
 
     def obj_create(self, bundle, **kwargs):
         return super(TagResource, self).obj_create(bundle, user=bundle.request.user)
@@ -66,7 +66,7 @@ class ArtistResource(ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['user']
+        excludes = ['user']
 
     def obj_create(self, bundle, **kwargs):
         return super(ArtistResource, self).obj_create(bundle, user=bundle.request.user)
@@ -84,7 +84,7 @@ class AlbumResource(ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['user']
+        excludes = ['user']
 
     def obj_create(self, bundle, **kwargs):
         return super(AlbumResource, self).obj_create(bundle, user=bundle.request.user)
@@ -102,7 +102,7 @@ class TrackResource(MultipartResourceMixin, ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['user']
+        excludes = ['user']
 
     def obj_create(self, bundle, **kwargs):
         return super(TrackResource, self).obj_create(bundle, user=bundle.request.user)
@@ -147,7 +147,7 @@ class TrackResource(MultipartResourceMixin, ModelResource):
                                 if artist_by_id is not None:
                                     artists.append("/api/v1/artist/{}/".format(artist_by_id.pk))
                                     artist_obj_list.append(artist_by_id)
-                            bundle.data['artists'] = artists
+                            bundle.data.setlist('artists', artists)
                         else:
                             for artist_entry in bundle.data.getlist('artist'):
                                 artist_entry_splitted = artist_entry.split("/")
@@ -191,7 +191,7 @@ class SongResource(TrackResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['user']
+        excludes = ['user']
 
 
 class SongInPlaylistResource(ModelResource):
@@ -204,7 +204,7 @@ class SongInPlaylistResource(ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['user']
+        excludes = ['user']
 
 
 class PlaylistResource(ModelResource):
@@ -220,7 +220,7 @@ class PlaylistResource(ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['user']
+        excludes = ['user']
 
     def obj_create(self, bundle, **kwargs):
         return super(PlaylistResource, self).obj_create(bundle, user=bundle.request.user)
@@ -256,7 +256,7 @@ class SettingsResource(ModelResource):
                                              ApiKeyOnlyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
         always_return_data = True
-        exclude = ['user']
+        excludes = ['user']
 
     def obj_create(self, bundle, **kwargs):
         return super(SettingsResource, self).obj_create(bundle, user=bundle.request.user)
