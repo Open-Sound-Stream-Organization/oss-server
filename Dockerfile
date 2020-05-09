@@ -25,8 +25,9 @@ COPY --from=builder /install /usr/local
 
 VOLUME /oss_server/db
 
-RUN apk add libjpeg zlib chromaprint ffmpeg \
-    && pip install six \
+RUN apk add libjpeg zlib ffmpeg \
+    && apk --no-cache add --repository http://dl-cdn.alpinelinux.org/alpine/edge/community chromaprint \
+    && pip install six certifi \
     && python manage.py collectstatic --noinput
 
 CMD python manage.py migrate --noinput \
