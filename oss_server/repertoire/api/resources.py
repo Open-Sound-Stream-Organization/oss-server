@@ -147,7 +147,7 @@ class TrackResource(MultipartResourceMixin, ModelResource):
                                 if artist_by_id is not None:
                                     artists.append("/api/v1/artist/{}/".format(artist_by_id.pk))
                                     artist_obj_list.append(artist_by_id)
-                            bundle.data.setlist('artists', artists)
+                            bundle.data['artists'] = artists
                         else:
                             for artist_entry in bundle.data.getlist('artist'):
                                 artist_entry_splitted = artist_entry.split("/")
