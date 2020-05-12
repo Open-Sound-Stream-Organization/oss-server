@@ -10,7 +10,9 @@ from mutagen import File as GetTags
 
 from repertoire.api.ApiKey import ApiKey
 from repertoire.api.MultipartUploadMixin import MultipartResourceMixin
-from repertoire.api.ApiKeyOnlyAuthentication import ApiKeyOnlyAuthentication, ApiKeyOnlyOnSelfDelete
+from repertoire.api.RestrictToMethod import RestrictToMethod
+
+from repertoire.api.ApiKeyOnlyAuthentication import ApiKeyOnlyAuthentication
 from repertoire.api.authorization import UserObjectsOnlyAuthorization
 from repertoire.models import Tag, Artist, Album, Playlist, Track, Settings, Area, TrackInPlaylist
 
@@ -241,8 +243,8 @@ class ApiKeyResource(ModelResource):
         allowed_methods = ['get', 'post', 'delete']
         always_return_data = True
         authentication = MultiAuthentication(
-                            BasicAuthentication(realm="Open Sound Stream: ApiKeyResource"),
-                            ApiKeyOnlyOnSelfDelete())
+                            RestrictToMethod(ApiKeyOnlyAuthentication(), method='DELETE'),
+                            RestrictToMethod(BasicAuthentication(realm="Open Sound Stream: ApiKeyResource"), method=["GET", "POST"]))
         authorization = UserObjectsOnlyAuthorization()
         excludes = ['key', 'shown', 'user']
 

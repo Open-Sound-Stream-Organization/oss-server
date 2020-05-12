@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, List
 from django.db.models import Model
 from repertoire.api.ApiKey import ApiKey
 from tastypie.http import HttpUnauthorized
@@ -25,18 +25,3 @@ class ApiKeyOnlyAuthentication(Authentication):
         except ObjectDoesNotExist:
             return False
         return api_key
-
-
-class ApiKeyOnlyOnSelfDelete(ApiKeyOnlyAuthentication):
-    def is_authenticated(self, request, **kwargs) -> bool:
-        if request.method == 'DELETE':
-            if super(ApiKeyOnlyOnSelfDelete, self).is_authenticated(request, **kwargs):
-                resolver_match: dict = request.resolver_match.kwargs
-                if resolver_match.get('resource_name') == 'apikey' and resolver_match.get('pk', None) is not None:
-                    return ApiKeyOnlyAuthentication.get_api_key(request).pk == resolver_match.get('pk')
-                else:
-                    return False
-            else:
-                return False
-        else:
-            return False
