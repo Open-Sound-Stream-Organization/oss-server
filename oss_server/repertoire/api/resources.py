@@ -143,7 +143,7 @@ class TrackResource(MultipartResourceMixin, ModelResource):
                         if "artists" not in bundle.data:
                             artist_list: List[Dict] = rec['recording']['artist-credit']
                             for artist_entry in artist_list:
-                                artist_by_id: Artist = Artist.get_by_mbid(bundle.obj.user, artist_entry["artist"]["id"])
+                                artist_by_id: Artist = Artist.get_by_mbid(bundle.request.user, artist_entry["artist"]["id"])
                                 if artist_by_id is not None:
                                     artists.append("/api/v1/artist/{}/".format(artist_by_id.pk))
                                     artist_obj_list.append(artist_by_id)
@@ -158,15 +158,24 @@ class TrackResource(MultipartResourceMixin, ModelResource):
                                 except ValueError:
                                     continue
                                 try:
-                                    artist_obj_list.append(Artist.objects.get(user=bundle.obj.user, pk=artist_id))
+                                    artist_obj_list.append(Artist.objects.get(user=bundle.request.user, pk=artist_id))
                                 except ObjectDoesNotExist:
                                     #dont process any further, let tastypie throw the exception
                                     return bundle
                         if "album" not in bundle.data and len(rec['recording']['release-list']) >= 1:
                             release = rec['recording']['release-list'][0]
-                            album, created = Album.objects.get_or_create(user=bundle.obj.user, name=release['title'])
+                            album, created = Album.objects.get_or_create(user=bundle.request.user, name=release['title'])
                             for artist_entry in artist_obj_list:
                                 album.artist.add(artist_entry)
+                            album.mbid = release["id"]
+                            try:
+                                img = musicbrainzngs.get_image_list(release["id"])
+                            except musicbrainzngs.ResponseError:
+                                pass
+                            else:
+                                if len(img["images"]) > 0:
+                                    album.cover_url = img["images"][0]["image"]
+
                             album.save()
                             bundle.data['album'] = "/api/v1/album/{}/".format(album.pk)
             metadata = GetTags(fileobj=bundle.data['audio'].file)
