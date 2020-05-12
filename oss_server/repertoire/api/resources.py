@@ -116,7 +116,7 @@ class TrackResource(MultipartResourceMixin, ModelResource):
         tag_name_translator: Dict[str, List[str]] = {
             'title': ['title'],
         }
-        if 'audio' in bundle.data.keys():
+        if 'audio' in bundle.data.keys() and bundle.request.method == 'POST':
             if settings.USE_ACOUSTID:
                 tmp_file_path = bundle.data.get('audio').temporary_file_path()
                 matches = acoustid.match(settings.ACOUSTID_API_KEY, tmp_file_path)
