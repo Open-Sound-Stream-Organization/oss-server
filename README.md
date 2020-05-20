@@ -31,3 +31,6 @@ The recommended and easiest way of deploying the OpenSoundStream Server is to us
 	    /etc/letsencrypt/live/my-domain.tld-0001/fullchain.pem SSLCertificateKeyFile
 	    /etc/letsencrypt/live/my-domain.tld-0001/privkey.pem
 	</VirtualHost>
+
+#### API-Documentation
+Can be found [here](https://github.com/Open-Sound-Stream-Organization/oss-server/blob/master/api-doc.md).
