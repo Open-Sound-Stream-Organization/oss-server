@@ -1,12 +1,11 @@
+import musicbrainzngs
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Model, CharField, TextField, ForeignKey, ManyToManyField, CASCADE, PROTECT, IntegerField, DateField, ImageField, FileField
-from django.db.models import Q
-from django.db import models
-from django.conf import settings
-import musicbrainzngs
+from django.db.models import Model, CharField, TextField, ForeignKey, ManyToManyField, CASCADE, PROTECT, IntegerField, \
+    DateField, ImageField, FileField
 
-import repertoire
+from dateutil.parser import parse
 
 
 class Tag(Model):
@@ -86,9 +85,9 @@ class Artist(Model):
             if 'life-span' in artist:
                 lifespan = artist['life-span']
                 if 'begin' in lifespan:
-                    artistobj.begin = lifespan['begin']
+                    artistobj.begin = parse(lifespan['begin']).date().isoformat()
                 if 'end' in lifespan:
-                    artistobj.end = lifespan['end']
+                    artistobj.end = parse(lifespan['end']).date().isoformat()
             artistobj.save()
             return artistobj
 
@@ -130,9 +129,9 @@ def audio_path(instance, filename):
 class Track(Model):
     title = CharField(max_length=512, verbose_name='Track Title')
     mbid = CharField(max_length=64, blank=True, null=True, verbose_name='Musicbrainz ID')
-    album = ForeignKey(Album, on_delete=CASCADE, verbose_name='Track in Album')
+    album = ForeignKey(Album, on_delete=CASCADE, verbose_name='Track in Album', blank=True, null=True)
     user = ForeignKey(User, on_delete=CASCADE)
-    artist = ManyToManyField(Artist, verbose_name='From Artist')
+    artist = ManyToManyField(Artist, verbose_name='From Artist', blank=True)
     tags = ManyToManyField(Tag, blank=True)
     audio = FileField(upload_to=audio_path, blank=True, null=True,
                        help_text=("Allowed type - .mp3, .wav, .ogg"), verbose_name='Audio File')

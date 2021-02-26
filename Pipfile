@@ -21,3 +21,4 @@ whitenoise = "*"
 mutagen = "*"
 setuptools = "*"
 tastypie-swagger = {git = "https://github.com/anjomro/django-tastypie-swagger"}
+python-dateutil = "*"

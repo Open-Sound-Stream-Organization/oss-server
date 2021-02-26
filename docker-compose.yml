@@ -1,20 +1,16 @@
-version: '3'
-
+version: '3.3'
 services:
-  ossdb:
-    image: postgres:alpine
-    environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
-    restart: always
-  oss_server:
-    build: .
-    command: ./start-server.sh
-    volumes:
-      - .:/oss_server
-    ports:
-      - "8000:8000"
-    environment:
-      - USE_POSTGRESQL=1
-    depends_on:
-      - ossdb
-    restart: always
+    oss-server:
+        ports:
+            - '8099:8000'
+        container_name: oss-server
+        volumes:
+          - type: volume
+            source: oss-server-db
+            target: /oss_server/db
+        environment:
+            - DJANGO_HOST=put-your-domain-here.example.com
+            - ACOUSTID_API_KEY=get-your-own-api-key-at-https://acoustid.org/new-application
+        image: 'opensoundstream/oss-server:alpine'
+volumes:
+    oss-server-db:
